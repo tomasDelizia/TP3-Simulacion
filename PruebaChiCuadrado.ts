@@ -1,6 +1,5 @@
 import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { PruebaBondad } from "./PruebaBondad";
-import { contarEnRango } from "./utils";
 
 export class PruebaChiCuadrado extends PruebaBondad {
   // Tabla de distribución Chi Cuadrado con p = 0.95, para grados de libertad entre 1 y 30.
@@ -10,8 +9,6 @@ export class PruebaChiCuadrado extends PruebaBondad {
     32.671, 33.924, 35.172, 36.415, 37.652, 38.885, 40.113, 41.337, 42.557, 43.773,
   ];
 
-  private tabla: string[][];
-  private rnds: number[];
   private k: number;
   private m: number;
 
@@ -30,41 +27,48 @@ export class PruebaChiCuadrado extends PruebaBondad {
     this.estadisticoTabulado = this.tablaChiCuadrado[this.v-1];
 
     // Agrupamos las frecuencias esperadas que no sean mayores o iguales a 5.
-    let frecEsperadas: number[] = generador.getFrecuenciasEsperadas();
-    let suma: number = 0;
-    for (let i: number = 0; i < frecEsperadas.length; i++) {
-      //let estadistico : number = (Math.pow((frecObservada-frecEsperada),2)) / frecEsperada;
-      //this.estadisticoPrueba += estadistico;
-      if (frecEsperadas[i] < 5) {
-        suma += frecEsperadas[i];
-      }
-      if (suma === 5) {
-      
-      }
-    }
-  }
-
-  public async pruebaChiCuadrado(cantIntervalos: number, tamMuestra: number): Promise<any> {
-
-    let limInferior: number = 0;
-    const anchoIntervalo: number = 1 / cantIntervalos;
-    const frecEsperada: number = tamMuestra / cantIntervalos;
+    let sumaFrecObs: number = 0;
+    let sumaFrecEsp: number = 0;
+    let desde: number = tablaDistribucion[0][0];
     this.estadisticoPrueba = 0;
-    this.tabla = [];
-    this.v = cantIntervalos - 1;
-    for (let i: number = 0; i < cantIntervalos; i++) {
-      let limSuperior: number = limInferior + anchoIntervalo;
-      let frecObservada = contarEnRango(this.rnds, limInferior, limSuperior);
-      let estadistico : number = (Math.pow((frecObservada-frecEsperada),2)) / frecEsperada;
-      this.estadisticoPrueba += estadistico;
-      this.tabla.push([
-        limInferior.toFixed(2) + ' - ' + limSuperior.toFixed(2),
-        frecObservada.toString(),
-        frecEsperada.toFixed(4),
-        estadistico.toFixed(4).toString(),
-        this.estadisticoPrueba.toFixed(4).toString(),
-      ]);
-      limInferior = limSuperior;
+    for (let i: number = 0; i < tablaDistribucion.length; i++) {
+      let frecObservada: number = tablaDistribucion[i][4];
+      let frecEsperada: number = tablaDistribucion[i][6];
+      if (sumaFrecEsp < 5) {
+        sumaFrecEsp += frecEsperada;
+        sumaFrecObs += frecObservada;
+        // Si estamos en la última iteración, debemos agrupar con el intervalo anterior.
+        if (i === tablaDistribucion.length - 1) {
+          desde = this.tablaPrueba[i][0];
+          let estadistico: number = (Math.pow((sumaFrecObs - sumaFrecEsp), 2)) / sumaFrecEsp;
+          this.estadisticoPrueba += estadistico;
+          let hasta: number = tablaDistribucion[i][0];
+          this.tablaPrueba.push([
+            desde,
+            hasta,
+            sumaFrecObs,
+            sumaFrecEsp,
+            estadistico,
+            this.estadisticoPrueba
+          ]);
+        }
+      }
+      else {
+        let estadistico: number = (Math.pow((sumaFrecObs - sumaFrecEsp), 2)) / sumaFrecEsp;
+        this.estadisticoPrueba += estadistico;
+        let hasta: number = tablaDistribucion[i][0];
+        this.tablaPrueba.push([
+          desde,
+          hasta,
+          sumaFrecObs,
+          sumaFrecEsp,
+          estadistico,
+          this.estadisticoPrueba
+        ]);
+        sumaFrecObs = frecObservada;
+        sumaFrecEsp = frecEsperada;
+        desde = hasta;
+      }
     }
   }
 

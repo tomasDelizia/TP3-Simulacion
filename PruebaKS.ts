@@ -26,7 +26,7 @@ export class PruebaKS extends PruebaBondad {
     let probObsAc: number = 0;
     let probEspAc: number = 0;
     let tablaDistribucion: number[][] = generador.getTabla();
-    for (let i: number = 0; i < generador.getTabla().length; i++) {
+    for (let i: number = 0; i < tablaDistribucion.length; i++) {
       probObsAc += tablaDistribucion[i][3];
       probEspAc += tablaDistribucion[i][5];
       let diferencia: number = Math.abs(probObsAc - probEspAc);
