@@ -6,6 +6,7 @@ import { contarEnRango, quickSort } from "./utils";
 export class GeneradorNormal extends GeneradorDistribucion {
 
   public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, media: number, desviacion: number, metodoNormal: string): Promise<any> {
+    this.n = n;
     this.rnds = [];
     this.tabla = [];
 
@@ -58,6 +59,7 @@ export class GeneradorNormal extends GeneradorDistribucion {
       let limSuperior: number = limInferior + anchoIntervalo;
       let marcaClase: number = (limInferior + limSuperior) / 2;
       let frecObservada = contarEnRango(this.rnds, limInferior, limSuperior);
+      let probObservada: number = frecObservada / n;
       let probEsperada: number = 
         Math.exp(-1/2 * ((marcaClase - media) / desviacion)^2) / (desviacion * Math.sqrt(2 * Math.PI)) * (limSuperior - limInferior);
       let frecEsperada: number = probEsperada * n;
@@ -65,6 +67,7 @@ export class GeneradorNormal extends GeneradorDistribucion {
         limInferior,
         limSuperior,
         marcaClase,
+        probObservada,
         frecObservada,
         probEsperada,
         frecEsperada

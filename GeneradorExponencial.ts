@@ -6,6 +6,7 @@ import { contarEnRango, quickSort } from "./utils";
 export class GeneradorExponencial extends GeneradorDistribucion {
 
   public async generarDistribucionExponencial(n: number, metodo: string, cantIntervalos: number, media: number): Promise<any> {
+    this.n = n;
     let lambda: number = 1 / media;
     this.rnds = [];
     this.tabla = [];
@@ -36,12 +37,14 @@ export class GeneradorExponencial extends GeneradorDistribucion {
       let limSuperior: number = limInferior + anchoIntervalo;
       let marcaClase: number = (limInferior + limSuperior) / 2;
       let frecObservada = contarEnRango(this.rnds, limInferior, limSuperior);
+      let probObservada: number = frecObservada / n;
       let probEsperada: number = 1 - Math.exp(-lambda * limSuperior) - (1 - Math.exp(-lambda * limInferior));
       let frecEsperada: number = probEsperada * n;
       this.tabla.push([
         limInferior,
         limSuperior,
         marcaClase,
+        probObservada,
         frecObservada,
         probEsperada,
         frecEsperada

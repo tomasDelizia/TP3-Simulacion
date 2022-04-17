@@ -4,6 +4,7 @@ import { contarSi, factorial, quickSort } from "./utils";
 export class GeneradorPoisson extends GeneradorDistribucion {
 
   public async generarDistribucion(n: number, lambda: number): Promise<any> {
+    this.n = n;
     this.rnds = [];
     this.tabla = [];
 
@@ -27,12 +28,14 @@ export class GeneradorPoisson extends GeneradorDistribucion {
     for (let i: number = min; i <= max; i++) {
       let valor: number = i;
       let frecObservada = contarSi(this.rnds, valor);
+      let probObservada: number = frecObservada / n;
       let probEsperada: number = Math.pow(lambda, valor) * Math.exp(-lambda) / factorial(valor);
       let frecEsperada: number = Math.round(probEsperada * n);
       this.tabla.push([
         valor,
         valor,
         valor,
+        probObservada,
         frecObservada,
         probEsperada,
         frecEsperada

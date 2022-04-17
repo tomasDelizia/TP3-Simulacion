@@ -4,6 +4,7 @@ export abstract class GeneradorDistribucion {
   protected generador: GeneradorNumeros;
   protected rnds: number[];
   protected tabla: number[][];
+  protected n: number;
 
   public async generarDistribucionUniforme(n: number, metodo: string, cantIntervalos: number, a: number, b: number): Promise<any> {
     return null;
@@ -42,10 +43,14 @@ export abstract class GeneradorDistribucion {
     let frecEsperadas: number[] = [];
     if (this.tabla != null) {
       for (let i: number = 0; i < this.tabla.length; i++) {
-        let frecEsperada: number = this.tabla[i][5];
+        let frecEsperada: number = this.tabla[i][6];
         frecEsperadas.push(frecEsperada);
       }
     }
     return frecEsperadas;
+  }
+
+  public getN(): number {
+    return this.n;
   }
 }
