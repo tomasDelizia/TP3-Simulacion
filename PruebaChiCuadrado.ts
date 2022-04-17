@@ -34,29 +34,32 @@ export class PruebaChiCuadrado extends PruebaBondad {
     for (let i: number = 0; i < tablaDistribucion.length; i++) {
       let frecObservada: number = tablaDistribucion[i][4];
       let frecEsperada: number = tablaDistribucion[i][6];
+      sumaFrecEsp += frecEsperada;
+      sumaFrecObs += frecObservada;
       if (sumaFrecEsp < 5) {
-        sumaFrecEsp += frecEsperada;
-        sumaFrecObs += frecObservada;
         // Si estamos en la última iteración, debemos agrupar con el intervalo anterior.
         if (i === tablaDistribucion.length - 1) {
-          desde = this.tablaPrueba[i][0];
+          desde = this.tablaPrueba[this.tablaPrueba.length - 1][0];
+          let hasta: number = tablaDistribucion[i][1];
+          sumaFrecObs += this.tablaPrueba[this.tablaPrueba.length - 1][2];
+          sumaFrecEsp += this.tablaPrueba[this.tablaPrueba.length - 1][3];
           let estadistico: number = (Math.pow((sumaFrecObs - sumaFrecEsp), 2)) / sumaFrecEsp;
           this.estadisticoPrueba += estadistico;
-          let hasta: number = tablaDistribucion[i][0];
-          this.tablaPrueba.push([
+          this.tablaPrueba[this.tablaPrueba.length - 1] = [
             desde,
             hasta,
             sumaFrecObs,
             sumaFrecEsp,
             estadistico,
             this.estadisticoPrueba
-          ]);
+          ];
         }
+        continue;
       }
       else {
         let estadistico: number = (Math.pow((sumaFrecObs - sumaFrecEsp), 2)) / sumaFrecEsp;
         this.estadisticoPrueba += estadistico;
-        let hasta: number = tablaDistribucion[i][0];
+        let hasta: number = tablaDistribucion[i][1];
         this.tablaPrueba.push([
           desde,
           hasta,
@@ -65,8 +68,8 @@ export class PruebaChiCuadrado extends PruebaBondad {
           estadistico,
           this.estadisticoPrueba
         ]);
-        sumaFrecObs = frecObservada;
-        sumaFrecEsp = frecEsperada;
+        sumaFrecObs = 0;
+        sumaFrecEsp = 0;
         desde = hasta;
       }
     }
