@@ -1,62 +1,52 @@
 import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
 import { GeneradorNumeros } from "./GeneradorNumeros";
-import { contarEnRango, quickSort } from "./utils";
+import { contarEnRango, contarSi, factorial, quickSort } from "./utils";
 
 export class GeneradorPoisson {
-  private generador: GeneradorNumeros;
   private rnds: number[];
   private tabla: number[][];
 
-  public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, lambda: number): Promise<any> {
+  public async generarDistribucion(n: number, cantIntervalos: number, lambda: number): Promise<any> {
     this.rnds = [];
     this.tabla = [];
 
-    switch (metodo) {
-      case 'generador-js':
-        this.generador = new GeneradorLenguaje();
-        break;
-      case 'generador-lineal':
-        this.generador = new GeneradorLineal();
-        break;
-    }
-    this.generador.generarNumerosPseudoaleatorios(n);
-    
     for (let i: number = 0; i < n; i++) {
-      let rnd: number = -1 * media * Math.log(1 - Math.random());
+      let p: number = 1;
+      let rnd: number = -1;
+      let a: number = Math.exp(-lambda);
+      do {
+        let u: number = Math.random();
+        p = p * u;
+        rnd = rnd + 1;
+      } while (p >= a);
       this.rnds.push(rnd);
     }
 
     quickSort(this.rnds);
 
-    const min: number = Math.floor(this.rnds[0]);
-    const max: number = Math.ceil(this.rnds[n - 1]);
-    let limInferior: number = min;
-    const anchoIntervalo: number = (max - min) / cantIntervalos;
+    const min: number = this.rnds[0];
+    const max: number = this.rnds[n - 1];
 
-    for (let i: number = 0; i < cantIntervalos; i++) {
-      let limSuperior: number = limInferior + anchoIntervalo;
-      let marcaClase: number = (limInferior + limSuperior) / 2;
-      let frecObservada = contarEnRango(this.rnds, limInferior, limSuperior);
-      let probEsperada: number = 1 - Math.exp(-lambda * limSuperior) - (1 - Math.exp(-lambda * limInferior));
-      let frecEsperada: number = probEsperada * n;
+    for (let i: number = min; i <= max; i++) {
+      let valor: number = i;
+      let frecObservada = contarSi(this.rnds, valor);
+      let probEsperada: number = Math.pow(lambda, valor) * Math.exp(-lambda) / factorial(valor);
+      let frecEsperada: number = Math.round(probEsperada * n);
       this.tabla.push([
-        limInferior,
-        limSuperior,
-        marcaClase,
+        valor,
         frecObservada,
         probEsperada,
         frecEsperada
       ]);
-      limInferior = limSuperior;
     }
   }
 
-  getRnds(): number[] {
+  public getRnds(): number[] {
     return this.rnds;
   }
 
-  getTabla(): number[][] {
+  public getTabla(): number[][] {
     return this.tabla;
   }
 }

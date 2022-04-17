@@ -76,11 +76,11 @@ export class GeneradorNormal {
     }
   }
 
-  getRnds(): number[] {
+  public getRnds(): number[] {
     return this.rnds;
   }
 
-  getTabla(): number[][] {
+  public getTabla(): number[][] {
     return this.tabla;
   }
 }

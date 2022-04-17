@@ -22,7 +22,7 @@ export class GeneradorExponencial {
         break;
     }
     this.generador.generarNumerosPseudoaleatorios(n);
-    
+
     for (let i: number = 0; i < n; i++) {
       let rnd: number = -1 * media * Math.log(1 - Math.random());
       this.rnds.push(rnd);
@@ -53,11 +53,11 @@ export class GeneradorExponencial {
     }
   }
 
-  getRnds(): number[] {
+  public getRnds(): number[] {
     return this.rnds;
   }
 
-  getTabla(): number[][] {
+  public getTabla(): number[][] {
     return this.tabla;
   }
 }

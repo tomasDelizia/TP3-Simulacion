@@ -66,31 +66,23 @@ function indiceMayor(vec: number[], y: number): number {
    
 // Función que cuenta los elementos de un vector en un rango dado.
 export function contarEnRango(vec: number[], limInf: number, limSup: number): number {
-    // Iniciar contador.
-    let contador: number = 0;
-    contador = indiceMayor(vec, limSup) -
-            indiceMenor(vec, limInf) + 1;
+    let contador: number = indiceMayor(vec, limSup) - indiceMenor(vec, limInf) + 1;
     return contador;
 }
 
-// Función que añade un elemento a un vector en orden.
-//export function addInOrder(vec: number[], x: number, n: number = vec.length): number//[] {
-//  let izq: number = 0;
-//  let der: number = n - 1;
-//  let pos: number = n;
-//  while (izq <= der) {
-//    let medio: number = Math.floor((izq + der) / 2);
-//    if (x == vec[medio]) {
-//      pos = medio;
-//      break;
-//    }
-//    if (x < vec[medio])
-//        der = medio - 1;
-//    else
-//        izq = medio + 1;
-//  }
-//  if (izq > der)
-//      pos = izq; 
-//  vec.splice(pos, 0, x);
-//  return vec;
-//}
+// Función que cuenta los elementos de un vector en un que sean iguales a un valor dado.
+export function contarSi(vec: number[], valor: number): number {
+  let contador: number = indiceMayor(vec, valor) - indiceMenor(vec, valor) + 1;
+  return contador;
+}
+
+// Función que calcula el factorial de un número pasado por parámetro.
+export function factorial(x: number): number {
+  if (x < 0) 
+        return -1;
+  else if (x === 0) 
+      return 1;
+  else {
+      return (x * factorial(x - 1));
+  }
+}
