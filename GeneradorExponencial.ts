@@ -1,22 +1,26 @@
+import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { contarEnRango, quickSort } from "./utils";
 
-export class GeneradorExponencial {
+export class GeneradorExponencial implements GeneradorDistribucion {
   private tabla: number[][];
 
-  public generarDistribucionExponencial(n: number, cantIntervalos: number, lambda: number): void {
+  public async generarDistribucion(n: number, cantIntervalos: number, media: number): Promise<any> {
+    let lambda: number = 1 / media;
     this.tabla = [];
 
     let rnds: number[] = [];
     for (let i: number = 0; i < n; i++) {
-      let rnd: number = (-1 / lambda) * Math.log(1 - Math.random());
+      let rnd: number = -1 * media * Math.log(1 - Math.random());
       rnds.push(rnd);
     }
 
     quickSort(rnds);
 
-    let limInferior: number = rnds[0];
-    const anchoIntervalo: number = 1 / cantIntervalos;
-    
+    let min: number = Math.floor(rnds[0]);
+    let max: number = Math.ceil(rnds[rnds.length - 1]);
+    let limInferior: number = min;
+    const anchoIntervalo: number = (max - min) / cantIntervalos;
+  
 
     for (let i: number = 0; i < cantIntervalos; i++) {
       let limSuperior: number = limInferior + anchoIntervalo;
