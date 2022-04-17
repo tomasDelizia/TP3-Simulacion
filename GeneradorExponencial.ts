@@ -1,14 +1,11 @@
+import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
-import { GeneradorNumeros } from "./GeneradorNumeros";
 import { contarEnRango, quickSort } from "./utils";
 
-export class GeneradorExponencial {
-  private generador: GeneradorNumeros;
-  private rnds: number[];
-  private tabla: number[][];
+export class GeneradorExponencial extends GeneradorDistribucion {
 
-  public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, media: number): Promise<any> {
+  public async generarDistribucionExponencial(n: number, metodo: string, cantIntervalos: number, media: number): Promise<any> {
     let lambda: number = 1 / media;
     this.rnds = [];
     this.tabla = [];
@@ -51,13 +48,5 @@ export class GeneradorExponencial {
       ]);
       limInferior = limSuperior;
     }
-  }
-
-  public getRnds(): number[] {
-    return this.rnds;
-  }
-
-  public getTabla(): number[][] {
-    return this.tabla;
   }
 }

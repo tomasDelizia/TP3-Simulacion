@@ -1,5 +1,5 @@
+import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { contarEnRango, quickSort } from "./utils";
-
 
 export class TestChiCuadrado {
   // Tabla de distribución Chi Cuadrado con p = 0.95, para grados de libertad entre 1 y 30.
@@ -8,11 +8,29 @@ export class TestChiCuadrado {
     19.675, 21.026, 22.362, 23.685, 24.996, 26.296, 27.587, 28.869, 30.144, 31.41,
     32.671, 33.924, 35.172, 36.415, 37.652, 38.885, 40.113, 41.337, 42.557, 43.773,
   ];
-  // Los grados de libertad.
   private v: number;
   private tabla: string[][];
   private estadisticoAcum: number;
   private rnds: number[];
+
+  private tablaPrueba: number[][];
+
+  public async probar(generador: GeneradorDistribucion): Promise<any> {
+    this.tablaPrueba = [];
+    // Agrupamos las frecuencias esperadas que no sean mayores o iguales a 5.
+    let frecEsperadas: number[] = generador.getFrecuenciasEsperadas();
+    let suma: number = 0;
+    for (let i: number = 0; i < frecEsperadas.length; i++) {
+      if (frecEsperadas[i] < 5) {
+        suma += frecEsperadas[i];
+      }
+      else {
+        if (suma < 5) {
+          
+        }
+      }
+    }
+  }
 
   public async pruebaChiCuadrado(cantIntervalos: number, tamMuestra: number): Promise<any> {
     // Generamos la serie de números pseudoaleatorios utilizando el método provisto por el lenguaje.
@@ -46,42 +64,19 @@ export class TestChiCuadrado {
     }
   }
 
-  // Prueba de Chi cuadrado utilizando un vector de números pasado por parámetro.
-  public async pruebaChiCuadradoLineal(cantIntervalos: number, tamMuestra: number, rnds: number[]): Promise<any> {
-    // Seteamos el vector de rnds como atributo de la clase.
-    this.rnds = rnds;
-    // Ordenamos el vector de números aleatorios.
-    quickSort(this.rnds);
-
-    let limInferior: number = 0;
-    const anchoIntervalo: number = 1 / cantIntervalos;
-    const frecEsperada: number = tamMuestra / cantIntervalos;
-    this.estadisticoAcum = 0;
-    this.tabla = [];
-    this.v = cantIntervalos - 1;
-    for (let i: number = 0; i < cantIntervalos; i++) {
-      let limSuperior: number = limInferior + anchoIntervalo;
-      let frecObservada = contarEnRango(this.rnds, limInferior, limSuperior);
-      let estadistico : number = (Math.pow((frecObservada-frecEsperada), 2)) / frecEsperada;
-      this.estadisticoAcum += estadistico;
-      this.tabla.push([
-        limInferior.toFixed(2) + ' - ' + limSuperior.toFixed(2),
-        frecObservada.toString(),
-        frecEsperada.toFixed(4),
-        estadistico.toFixed(4).toString(),
-        this.estadisticoAcum.toFixed(4).toString(),
-      ]);
-      limInferior = limSuperior;
-    }
-  }
-
   public validarHipotesis(): string {
-    const estadisticoTab: number = this.tablaChiCuadrado[this.v-1];
-    // Si el estadistico calculado es mayor al tabulado, se rechaza la hipótesis nula.
-    if (this.estadisticoAcum > estadisticoTab)
-      return 'Ya que el estadístico calculado es mayor al estadístico tabulado (' + this.estadisticoAcum.toFixed(4) + ' > ' + estadisticoTab + '), se procede a rechazar la hipótesis nula.';
-    else
-      return 'Ya que el estadístico calculado es menor o igual al estadístico tabulado (' + this.estadisticoAcum.toFixed(4) + ' <= ' + estadisticoTab + '), no se puede a rechazar la hipótesis nula.';
+    if (this.v <= 0) {
+      return 'No se puede realizar la prueba Chi-Cuadrado,';
+    }
+    else {
+      const estadisticoTab: number = this.tablaChiCuadrado[this.v-1];
+      // Si el estadistico calculado es mayor al tabulado, se rechaza la hipótesis nula.
+      if (this.estadisticoAcum > estadisticoTab)
+        return 'Ya que el estadístico calculado es mayor al estadístico tabulado (' + this.estadisticoAcum.toFixed(4) + ' > ' + estadisticoTab + '), se procede a rechazar la hipótesis nula.';
+      else
+        return 'Ya que el estadístico calculado es menor o igual al estadístico tabulado (' + this.estadisticoAcum.toFixed(4) + ' <= ' + estadisticoTab + '), no se puede rechazar la hipótesis nula.';
+    }
+
   }
 
   public getTabla(): string[][] {

@@ -1,12 +1,9 @@
+import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
-import { GeneradorNumeros } from "./GeneradorNumeros";
 import { contarEnRango, quickSort } from "./utils";
 
-export class GeneradorUniforme {
-  private generador: GeneradorNumeros;
-  private rnds: number[];
-  private tabla: number[][];
+export class GeneradorUniforme extends GeneradorDistribucion {
 
   public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, a: number, b: number): Promise<any> {
     this.rnds = [];
@@ -32,6 +29,7 @@ export class GeneradorUniforme {
     let limInferior: number = a;
     const anchoIntervalo: number = (b - a) / cantIntervalos;
     const frecEsperada: number = n / cantIntervalos;
+    const probEsperada: number = 1 / cantIntervalos;
 
     for (let i: number = 0; i < cantIntervalos; i++) {
       let limSuperior: number = limInferior + anchoIntervalo;
@@ -41,19 +39,11 @@ export class GeneradorUniforme {
         limInferior,
         limSuperior,
         marcaClase,
-        (limInferior + limSuperior) / 2,
         frecObservada,
+        probEsperada,
         frecEsperada
       ]);
       limInferior = limSuperior;
     }
-  }
-
-  public getRnds(): number[] {
-    return this.rnds;
-  }
-
-  public getTabla(): number[][] {
-    return this.tabla;
   }
 }

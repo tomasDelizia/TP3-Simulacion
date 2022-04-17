@@ -1,13 +1,9 @@
-import { GeneradorLenguaje } from "./GeneradorLenguaje";
-import { GeneradorLineal } from "./GeneradorLineal";
-import { GeneradorNumeros } from "./GeneradorNumeros";
-import { contarEnRango, contarSi, factorial, quickSort } from "./utils";
+import { GeneradorDistribucion } from "./GeneradorDistribucion";
+import { contarSi, factorial, quickSort } from "./utils";
 
-export class GeneradorPoisson {
-  private rnds: number[];
-  private tabla: number[][];
+export class GeneradorPoisson extends GeneradorDistribucion {
 
-  public async generarDistribucion(n: number, cantIntervalos: number, lambda: number): Promise<any> {
+  public async generarDistribucion(n: number, lambda: number): Promise<any> {
     this.rnds = [];
     this.tabla = [];
 
@@ -35,6 +31,8 @@ export class GeneradorPoisson {
       let frecEsperada: number = Math.round(probEsperada * n);
       this.tabla.push([
         valor,
+        valor,
+        valor,
         frecObservada,
         probEsperada,
         frecEsperada
@@ -42,11 +40,12 @@ export class GeneradorPoisson {
     }
   }
 
-  public getRnds(): number[] {
-    return this.rnds;
-  }
-
-  public getTabla(): number[][] {
-    return this.tabla;
+  public getIntervalos(): string[] {
+    let valores: string[] = [];
+    for (let i: number = 0; i < this.rnds.length; i++) {
+      let valor: string = this.rnds[i][0];
+      valores.push(valor);
+    }
+    return valores;
   }
 }

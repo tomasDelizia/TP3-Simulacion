@@ -1,12 +1,9 @@
+import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
-import { GeneradorNumeros } from "./GeneradorNumeros";
 import { contarEnRango, quickSort } from "./utils";
 
-export class GeneradorNormal {
-  private generador: GeneradorNumeros;
-  private rnds: number[];
-  private tabla: number[][];
+export class GeneradorNormal extends GeneradorDistribucion {
 
   public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, media: number, desviacion: number, metodoNormal: string): Promise<any> {
     this.rnds = [];
@@ -74,13 +71,5 @@ export class GeneradorNormal {
       ]);
       limInferior = limSuperior;
     }
-  }
-
-  public getRnds(): number[] {
-    return this.rnds;
-  }
-
-  public getTabla(): number[][] {
-    return this.tabla;
   }
 }
