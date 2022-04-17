@@ -1,3 +1,5 @@
 export interface GeneradorDistribucion {
-  generarDistribucion(n: number, cantIntervalos: number, metodo: string, a?: number, b?: number, media?: number, desviacion?: number, metodoNormal?: string): Promise<any>
+  generarDistribucion(rndsUniformes: number[], cantIntervalos: number, a?: number, b?: number, media?: number, desviacion?: number, metodoNormal?: string): Promise<any>;
+  getRnds(): number[];
+  getTabla(): number[][];
 }

@@ -3,12 +3,12 @@ import { GeneradorLineal } from "./GeneradorLineal";
 import { GeneradorNumeros } from "./GeneradorNumeros";
 import { contarEnRango, quickSort } from "./utils";
 
-export class GeneradorUniforme {
+export class GeneradorPoisson {
   private generador: GeneradorNumeros;
   private rnds: number[];
   private tabla: number[][];
 
-  public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, a: number, b: number): Promise<any> {
+  public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, lambda: number): Promise<any> {
     this.rnds = [];
     this.tabla = [];
 
@@ -23,26 +23,29 @@ export class GeneradorUniforme {
     this.generador.generarNumerosPseudoaleatorios(n);
     
     for (let i: number = 0; i < n; i++) {
-        let rnd: number = a + (this.generador.getRnds()[i] * (b - a));
-        this.rnds.push(rnd);
+      let rnd: number = -1 * media * Math.log(1 - Math.random());
+      this.rnds.push(rnd);
     }
 
     quickSort(this.rnds);
 
-    let limInferior: number = a;
-    const anchoIntervalo: number = (b - a) / cantIntervalos;
-    const frecEsperada: number = n / cantIntervalos;
+    const min: number = Math.floor(this.rnds[0]);
+    const max: number = Math.ceil(this.rnds[n - 1]);
+    let limInferior: number = min;
+    const anchoIntervalo: number = (max - min) / cantIntervalos;
 
     for (let i: number = 0; i < cantIntervalos; i++) {
       let limSuperior: number = limInferior + anchoIntervalo;
       let marcaClase: number = (limInferior + limSuperior) / 2;
-      let frecObservada: number = contarEnRango(this.rnds, limInferior, limSuperior);
+      let frecObservada = contarEnRango(this.rnds, limInferior, limSuperior);
+      let probEsperada: number = 1 - Math.exp(-lambda * limSuperior) - (1 - Math.exp(-lambda * limInferior));
+      let frecEsperada: number = probEsperada * n;
       this.tabla.push([
         limInferior,
         limSuperior,
         marcaClase,
-        (limInferior + limSuperior) / 2,
         frecObservada,
+        probEsperada,
         frecEsperada
       ]);
       limInferior = limSuperior;
