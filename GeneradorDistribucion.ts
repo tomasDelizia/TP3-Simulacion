@@ -10,7 +10,7 @@ export abstract class GeneradorDistribucion {
     return null;
   }
 
-  public async generarDistribucionExponencial(n: number, metodo: string, cantIntervalos: number, media: number): Promise<any> {
+  public async generarDistribucionExponencial(n: number, metodo: string, cantIntervalos: number, lambda: number): Promise<any> {
     return null;
   }
 
