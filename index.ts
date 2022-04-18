@@ -1,4 +1,5 @@
 // Import stylesheets
+import { GeneradorCSV } from './GeneradorCSV';
 import { GeneradorDistribucion } from './GeneradorDistribucion';
 import { GeneradorExponencial } from './GeneradorExponencial';
 import { GeneradorNormal } from './GeneradorNormal';
@@ -10,7 +11,7 @@ import './style.css';
 // Definición de los cuadros de texto de la interfaz de usuario.
 const txtCantNros: HTMLInputElement = document.getElementById("txtCantNros") as HTMLInputElement;
 const txtA: HTMLInputElement = document.getElementById("txtA") as HTMLInputElement;
-const txtB: HTMLInputElement = document.getElementById("txtA") as HTMLInputElement;
+const txtB: HTMLInputElement = document.getElementById("txtB") as HTMLInputElement;
 const txtMedia: HTMLInputElement = document.getElementById("txtMedia") as HTMLInputElement;
 const txtDesviacionEstandar: HTMLInputElement = document.getElementById("txtDesviacionEstandar") as HTMLInputElement;
 const txtLambdaExponencial: HTMLInputElement = document.getElementById("txtLambdaExponencial") as HTMLInputElement;
@@ -26,6 +27,7 @@ const btnDistUniforme: HTMLButtonElement = document.getElementById('btnDistUnifo
 const btnDistNormal: HTMLButtonElement = document.getElementById('btnDistNormal') as HTMLButtonElement;
 const btnDistExponencial: HTMLButtonElement = document.getElementById('btnDistExponencial') as HTMLButtonElement;
 const btnDistPoisson: HTMLButtonElement = document.getElementById('btnDistPoisson') as HTMLButtonElement;
+const btnDescargarUniforme: HTMLButtonElement = document.getElementById('btnDescargarUniforme') as HTMLButtonElement;
 
 // Definición de las secciones de cada distribución.
 const divDistUniforme: HTMLDivElement = document.getElementById('distUniforme') as HTMLDivElement;
@@ -39,6 +41,9 @@ const tablaDistUniforme: HTMLTableElement = document.getElementById('tablaDistUn
 const tablaDistNormal: HTMLTableElement = document.getElementById('tablaDistNormal') as HTMLTableElement;
 const tablaDistExponencial: HTMLTableElement = document.getElementById('tablaDistExponencial') as HTMLTableElement;
 const tablaDistPoisson: HTMLTableElement = document.getElementById('tablaDistPoisson') as HTMLTableElement;
+
+// Definición del generador de archivos CSV.
+const generadorCSV: GeneradorCSV = new GeneradorCSV();
 
 // Definición de los parámetros.
 let n: number;
@@ -86,6 +91,7 @@ cboDistribucion.addEventListener('input', () => {
       ocultarSeccion(divDistExponencial);
       ocultarSeccion(divDistPoisson);
       cboMetodoGeneracion.disabled = false;
+      btnDescargarUniforme.disabled = true;
       break;
     case "2":
       generadorDistribucion = new GeneradorNormal();
@@ -118,12 +124,21 @@ cboDistribucion.addEventListener('input', () => {
 btnDistUniforme.addEventListener('click', async () => {
   if (validarParametrosUniforme()) {
     limpiarTabla(tablaDistUniforme);
-    await generadorDistribucion.generarDistribucionUniforme(b, metodo, cantIntervalos, a, b);
+    await generadorDistribucion.generarDistribucionUniforme(n, metodo, cantIntervalos, a, b);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
       agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistUniforme);
     }
+    btnDescargarUniforme.disabled = false;
   }
 });
+
+// Dispara la generación de un archivo csv 
+btnDescargarUniforme.addEventListener('click', generarArchivo);
+
+// Genera un archivo CSV que contiene los números aleatorios generados.
+function generarArchivo(): void {
+    generadorCSV.generarArchivo(generadorDistribucion.getRnds(), 'Serie');
+}
 
 function validarParametrosUniforme(): boolean {
   if (cboCantIntervalos.value == "0") {

@@ -5,7 +5,7 @@ import { contarEnRango, quickSort } from "./utils";
 
 export class GeneradorUniforme extends GeneradorDistribucion {
 
-  public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, a: number, b: number): Promise<any> {
+  public async generarDistribucionUniforme(n: number, metodo: string, cantIntervalos: number, a: number, b: number): Promise<any> {
     this.n = n;
     this.rnds = [];
     this.tabla = [];
@@ -21,8 +21,8 @@ export class GeneradorUniforme extends GeneradorDistribucion {
     this.generador.generarNumerosPseudoaleatorios(n);
 
     for (let i: number = 0; i < n; i++) {
-        let rnd: number = a + (this.generador.getRnds()[i] * (b - a));
-        this.rnds.push(rnd);
+      let rnd: number = a + (this.generador.getRnds()[i] * (b - a));
+      this.rnds.push(rnd);
     }
 
     quickSort(this.rnds);
