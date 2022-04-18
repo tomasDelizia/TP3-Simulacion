@@ -26,6 +26,7 @@ export class PruebaKS extends PruebaBondad {
     let probObsAc: number = 0;
     let probEspAc: number = 0;
     let tablaDistribucion: number[][] = generador.getTabla();
+    this.estadisticoPrueba = 0;
     for (let i: number = 0; i < tablaDistribucion.length; i++) {
       probObsAc += tablaDistribucion[i][3];
       probEspAc += tablaDistribucion[i][5];

@@ -24,8 +24,8 @@ export abstract class GeneradorDistribucion {
 
   public getIntervalos(): string[] {
     let intervalos: string[] = [];
-    for (let i: number = 0; i < this.rnds.length; i++) {
-      let intervalo: string = this.rnds[i][0] + ' - ' + this.rnds[i][1];
+    for (let i: number = 0; i < this.tabla.length; i++) {
+      let intervalo: string = this.tabla[i][0] + ' - ' + this.tabla[i][1];
       intervalos.push(intervalo);
     }
     return intervalos;
@@ -39,15 +39,15 @@ export abstract class GeneradorDistribucion {
     return this.tabla;
   }
 
-  public getFrecuenciasEsperadas(): number[] {
-    let frecEsperadas: number[] = [];
+  public getFrecuenciasObservadas(): number[] {
+    let frecObservadas: number[] = [];
     if (this.tabla != null) {
       for (let i: number = 0; i < this.tabla.length; i++) {
-        let frecEsperada: number = this.tabla[i][6];
-        frecEsperadas.push(frecEsperada);
+        let frecObservada: number = this.tabla[i][4];
+        frecObservadas.push(frecObservada);
       }
     }
-    return frecEsperadas;
+    return frecObservadas;
   }
 
   public getN(): number {

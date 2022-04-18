@@ -79,6 +79,10 @@ export class PruebaChiCuadrado extends PruebaBondad {
     if (this.v <= 0 || this.v > 30) {
       return 'No se puede realizar la prueba Chi-Cuadrado,';
     }
-    super.validarHipotesis();
+    // Si el estadistico calculado es mayor al tabulado, se rechaza la hipótesis nula.
+    if (this.estadisticoPrueba > this.estadisticoTabulado)
+    return 'Ya que el estadístico calculado es mayor al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' > ' + this.estadisticoTabulado + '), se procede a rechazar la hipótesis nula.';
+    else
+      return 'Ya que el estadístico calculado es menor o igual al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' <= ' + this.estadisticoTabulado + '), no se puede rechazar la hipótesis nula.';
   }
 }
