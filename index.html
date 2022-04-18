@@ -42,7 +42,7 @@
       <div class="row mb-3 mx-3">
         <div class="col">
           <label class="form-label" for="cboMetodoGeneracion"
-            >Seleccione el método para la distribución:</label
+            >Seleccione el método de generación:</label
           >
           <select class="form-select mb-3" id="cboMetodoGeneracion">
             <option value="0" selected>Seleccione un método...</option>
@@ -92,6 +92,24 @@
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistUniforme" type="button" name="btnDistUniforme">Generar Distribución</button>
         </div>
 
+        <div>
+          <table id="tablaDistUniforme" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>MC</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
         <hr>
 
       </div>
@@ -120,6 +138,24 @@
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistNormal" type="button" name="btnDistNormal">Generar Distribución</button>
         </div>
 
+        <div>
+          <table id="tablaDistNormal" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>MC</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
         <hr>
 
       </div>
@@ -140,6 +176,24 @@
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistExponencial" type="button" name="btnDistExponencial">Generar Distribución</button>
         </div>
 
+        <div>
+          <table id="tablaDistExponencial" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>MC</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
         <hr>
 
       </div>
@@ -158,6 +212,22 @@
 
         <div class="row mb-3 mx-3">
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistPoisson" type="button" name="btnDistPoisson">Generar Distribución</button>
+        </div>
+
+        <div>
+          <table id="tablaDistPoisson" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>Valor</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
       </div>
 

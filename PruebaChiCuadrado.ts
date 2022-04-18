@@ -15,16 +15,6 @@ export class PruebaChiCuadrado extends PruebaBondad {
   public async probar(generador: GeneradorDistribucion): Promise<any> {
     this.tablaPrueba = [];
     let tablaDistribucion: number[][] = generador.getTabla();
-    // Obtenemos el valor del estadístico de tabulado y los grados de libertad.
-    this.k = tablaDistribucion.length;
-    this.m = -1;
-    if (generador.constructor.name === 'GeneradorPoisson')
-      this.m = 2;
-    else {
-      this.m = 1;
-    }
-    this.v = this.k - this.m - 1;
-    this.estadisticoTabulado = this.tablaChiCuadrado[this.v-1];
 
     // Agrupamos las frecuencias esperadas que no sean mayores o iguales a 5.
     let sumaFrecObs: number = 0;
@@ -54,7 +44,6 @@ export class PruebaChiCuadrado extends PruebaBondad {
             this.estadisticoPrueba
           ];
         }
-        continue;
       }
       else {
         let estadistico: number = (Math.pow((sumaFrecObs - sumaFrecEsp), 2)) / sumaFrecEsp;
@@ -73,6 +62,17 @@ export class PruebaChiCuadrado extends PruebaBondad {
         desde = hasta;
       }
     }
+
+    // Obtenemos el valor del estadístico de tabulado y los grados de libertad.
+    this.k = this.tablaPrueba.length;
+    this.m = -1;
+    if (generador.constructor.name === 'GeneradorPoisson')
+      this.m = 2;
+    else {
+      this.m = 1;
+    }
+    this.v = this.k - this.m - 1;
+    this.estadisticoTabulado = this.tablaChiCuadrado[this.v-1];
   }
 
   public validarHipotesis(): string {

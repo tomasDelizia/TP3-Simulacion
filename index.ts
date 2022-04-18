@@ -34,6 +34,12 @@ const divDistExponencial: HTMLDivElement = document.getElementById('distExponenc
 const divDistPoisson: HTMLDivElement = document.getElementById('distPoisson') as 
 HTMLDivElement;
 
+// Definición de las tablas de la interfaz de usuario.
+const tablaDistUniforme: HTMLTableElement = document.getElementById('tablaDistUniforme') as HTMLTableElement;
+const tablaDistNormal: HTMLTableElement = document.getElementById('tablaDistNormal') as HTMLTableElement;
+const tablaDistExponencial: HTMLTableElement = document.getElementById('tablaDistExponencial') as HTMLTableElement;
+const tablaDistPoisson: HTMLTableElement = document.getElementById('tablaDistPoisson') as HTMLTableElement;
+
 // Definición de los parámetros.
 let n: number;
 let cantIntervalos: number;
@@ -109,9 +115,13 @@ cboDistribucion.addEventListener('input', () => {
 });
 
 // Dispara la generación de números aleatorios con distribución uniforme (A, B).
-btnDistUniforme.addEventListener('click', () => {
+btnDistUniforme.addEventListener('click', async () => {
   if (validarParametrosUniforme()) {
-    generadorDistribucion.generarDistribucionUniforme(b, metodo, cantIntervalos, a, b);
+    limpiarTabla(tablaDistUniforme);
+    await generadorDistribucion.generarDistribucionUniforme(b, metodo, cantIntervalos, a, b);
+    for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
+      agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistUniforme);
+    }
   }
 });
 
@@ -142,4 +152,34 @@ function validarParametrosUniforme(): boolean {
     return false;
   }
   return true;
+}
+
+// Función que borra los parámetros ingresados por el usuario.
+function limpiarParametros(): void {
+  txtCantNros.value = '';
+  txtA.value = '';
+  txtB.value = '';
+  txtMedia.value = '';
+  txtLambdaExponencial.value = '';
+  txtLambdaPoisson.value = '';
+  txtDesviacionEstandar.value = '';
+  cboCantIntervalos.value = "0";
+  cboDistribucion.value = "0";
+  cboMetodoGeneracion.value = "0";
+}
+
+// Función que elimina todas las filas de la tabla HTML excepto los encabezados.
+function limpiarTabla(tabla: HTMLTableElement) {
+  for(let i: number = tabla.rows.length; i > 1; i--) {
+      tabla.deleteRow(i - 1);
+  }
+}
+
+// Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
+function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
+  let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
+  for (let i: number = 0; i < fila.length; i++) {
+      let celda = filaHTML.insertCell();
+      celda.appendChild(document.createTextNode(String(fila[i])));
+  }
 }
