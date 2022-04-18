@@ -31,6 +31,9 @@ const btnDistNormal: HTMLButtonElement = document.getElementById('btnDistNormal'
 const btnDistExponencial: HTMLButtonElement = document.getElementById('btnDistExponencial') as HTMLButtonElement;
 const btnDistPoisson: HTMLButtonElement = document.getElementById('btnDistPoisson') as HTMLButtonElement;
 const btnDescargarUniforme: HTMLButtonElement = document.getElementById('btnDescargarUniforme') as HTMLButtonElement;
+const btnDescargarExponencial: HTMLButtonElement = document.getElementById('btnDescargarExponencial') as HTMLButtonElement;
+const btnDescargarPoisson: HTMLButtonElement = document.getElementById('btnDescargarPoisson') as HTMLButtonElement;
+
 
 // Definición de las secciones de cada distribución.
 const divDistUniforme: HTMLDivElement = document.getElementById('distUniforme') as HTMLDivElement;
@@ -45,11 +48,23 @@ const tablaDistExponencial: HTMLTableElement = document.getElementById('tablaDis
 const tablaDistPoisson: HTMLTableElement = document.getElementById('tablaDistPoisson') as HTMLTableElement;
 const tablaChiDistUniforme: HTMLTableElement = document.getElementById('tablaChiDistUniforme') as HTMLTableElement;
 const tablaKSDistUniforme: HTMLTableElement = document.getElementById('tablaKSDistUniforme') as HTMLTableElement;
+const tablaChiDistExponencial:HTMLTableElement = document.getElementById('tablaChiDistExponencial') as HTMLTableElement;
+const tablaKSDistExponencial: HTMLTableElement = document.getElementById('tablaKSDistExponencial') as HTMLTableElement;
+const tablaChiDistPoisson:HTMLTableElement = document.getElementById('tablaChiDistPoisson') as HTMLTableElement;
+const tablaKSDistPoisson: HTMLTableElement = document.getElementById('tablaKSDistPoisson') as HTMLTableElement;
+
 
 
 // Definición de los cuadros con los resultados de las hipótesis.
 const txtResChiUniforme: HTMLTextAreaElement = document.getElementById('txtResChiUniforme') as HTMLTextAreaElement;
 const txtResKSUniforme: HTMLTextAreaElement = document.getElementById('txtResKSUniforme') as HTMLTextAreaElement;
+
+const txtResChiExponencial: HTMLTextAreaElement = document.getElementById('txtResChiExponencial') as HTMLTextAreaElement;
+const txtResKSExponencial: HTMLTextAreaElement = document.getElementById('txtResKSExponencial') as HTMLTextAreaElement;
+
+const txtResChiPoisson: HTMLTextAreaElement = document.getElementById('txtResChiPoisson') as HTMLTextAreaElement;
+const txtResKSPoisson: HTMLTextAreaElement = document.getElementById('txtResKSPoisson') as HTMLTextAreaElement;
+
 
 // Definición del generador de archivos CSV.
 const generadorCSV: GeneradorCSV = new GeneradorCSV();
@@ -74,8 +89,18 @@ const histogramaDistUniforme: HTMLCanvasElement = document.getElementById('histo
 const areaHistDistUniforme = histogramaDistUniforme.getContext('2d');
 let graficoDistUniforme: Chart;
 
+const histogramaDistExponencial: HTMLCanvasElement = document.getElementById('histogramaDistExponencial') as HTMLCanvasElement;
+const areaHistDistExponencial = histogramaDistExponencial.getContext('2d');
+let graficoDistExponencial: Chart;
+
+const histogramaDistPoisson: HTMLCanvasElement = document.getElementById('histogramaDistPoisson') as HTMLCanvasElement;
+const areaHistDistPoisson = histogramaDistPoisson.getContext('2d');
+let graficoDistPoisson: Chart;
+
 // Dispara la generación de un archivo csv 
 btnDescargarUniforme.addEventListener('click', generarArchivo);
+btnDescargarExponencial.addEventListener('click',generarArchivo);
+btnDescargarPoisson.addEventListener('click', generarArchivo);
 
 // Genera un archivo CSV que contiene los números aleatorios generados.
 function generarArchivo(): void {
@@ -129,6 +154,7 @@ cboDistribucion.addEventListener('input', () => {
       ocultarSeccion(divDistUniforme);
       ocultarSeccion(divDistPoisson);
       cboMetodoGeneracion.disabled = false;
+      btnDescargarExponencial.disabled = true;
       break;
     case "4":
       generadorDistribucion = new GeneradorPoisson();
@@ -150,7 +176,7 @@ btnDistUniforme.addEventListener('click', async () => {
       agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistUniforme);
     }
     btnDescargarUniforme.disabled = false;
-    generarGrafico();
+    generarGraficoUniforme();
 
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);
@@ -165,6 +191,56 @@ btnDistUniforme.addEventListener('click', async () => {
       agregarFilaATabla(pruebaKS.getTabla()[i], tablaKSDistUniforme);
     }
     txtResKSUniforme.value = pruebaKS.validarHipotesis();
+  }
+});
+
+btnDistExponencial.addEventListener('click', async () => {
+  if (validarParametrosExponencial()){
+    limpiarTabla(tablaDistExponencial);
+    await generadorDistribucion.generarDistribucionExponencial(n,metodo,cantIntervalos,lambda);
+    for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
+      agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistExponencial);
+    }
+    btnDescargarExponencial.disabled = false;
+    generarGraficoExponencial();
+    // Realizamos la prueba Chi-Cuadrado.
+    await pruebaChiCuadrado.probar(generadorDistribucion);
+    for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
+      agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistExponencial);
+    }
+    txtResChiExponencial.value = pruebaChiCuadrado.validarHipotesis();
+
+    // Realizamos la prueba KS.
+    await pruebaKS.probar(generadorDistribucion);
+    for (let i: number = 0; i < pruebaKS.getTabla().length; i++) {
+      agregarFilaATabla(pruebaKS.getTabla()[i], tablaKSDistExponencial);
+    }
+    txtResKSExponencial.value = pruebaKS.validarHipotesis();
+  }
+});
+
+btnDistPoisson.addEventListener('click', async () => {
+  if (validarParametrosPoisson()){
+    limpiarTabla(tablaDistExponencial);
+    await generadorDistribucion.generarDistribucionPoisson(n, lambda);
+    for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
+      agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistPoisson);
+    }
+    btnDescargarPoisson.disabled = false;
+    generarGraficoPoisson();
+    // Realizamos la prueba Chi-Cuadrado.
+    await pruebaChiCuadrado.probar(generadorDistribucion);
+    for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
+      agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistPoisson);
+    }
+    txtResChiPoisson.value = pruebaChiCuadrado.validarHipotesis();
+
+    // Realizamos la prueba KS.
+    await pruebaKS.probar(generadorDistribucion);
+    for (let i: number = 0; i < pruebaKS.getTabla().length; i++) {
+      agregarFilaATabla(pruebaKS.getTabla()[i], tablaKSDistPoisson);
+    }
+    txtResKSPoisson.value = pruebaKS.validarHipotesis();
   }
 });
 
@@ -192,6 +268,49 @@ function validarParametrosUniforme(): boolean {
   }
   if (a > b) {
     alert('El valor de "b" debe ser mayor a "a".');
+    return false;
+  }
+  return true;
+}
+
+function validarParametrosExponencial() : boolean {
+  if (cboCantIntervalos.value == "0") {
+    alert('Ingrese la cantidad de intervalos');
+    return false;
+  }
+  if (cboMetodoGeneracion.value == "0") {
+    alert('Ingrese el método de generación de números aletorios');
+    return false;
+  }
+  if (txtCantNros.value == "" || txtLambdaExponencial.value == "") {
+    alert('Tiene que ingresar todos los parámetros solicitados.');
+    return false;
+  }
+  n = Number(txtCantNros.value);
+  lambda = Number(txtLambdaExponencial.value);
+  metodo = cboMetodoGeneracion.value;
+  cantIntervalos = Number(cboCantIntervalos.value);
+  if (n <= 0) {
+    alert('La cantidad de números a generar debe ser mayor a cero.');
+    return false;
+  }
+  return true;
+}
+
+function validarParametrosPoisson() : boolean {
+  if (cboCantIntervalos.value == "0") {
+    alert('Ingrese la cantidad de intervalos');
+    return false;
+  }
+  if (txtCantNros.value == "" || txtLambdaPoisson.value == "") {
+    alert('Tiene que ingresar todos los parámetros solicitados.');
+    return false;
+  }
+  n = Number(txtCantNros.value);
+  lambda = Number(txtLambdaPoisson.value);
+  cantIntervalos = Number(cboCantIntervalos.value);
+  if (n <= 0) {
+    alert('La cantidad de números a generar debe ser mayor a cero.');
     return false;
   }
   return true;
@@ -227,9 +346,53 @@ function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
   }
 }
 
-function generarGrafico(): void {
+function generarGraficoUniforme(): void {
   limpiarGraficos();
   graficoDistUniforme = new Chart(areaHistDistUniforme, {
+      type:'bar',
+      data:{
+          labels: generadorDistribucion.getIntervalos(),
+          datasets:[{
+              label: 'Frecuencias observadas',
+              data: generadorDistribucion.getFrecuenciasObservadas(),
+              backgroundColor: '#F8C471'
+          }]
+      },
+      options:{
+          scales:{
+              yAxes:{
+                  beginAtZero:true
+              }
+          }
+      }
+  });
+}
+
+function generarGraficoExponencial(): void {
+  limpiarGraficos();
+  graficoDistExponencial = new Chart(areaHistDistExponencial, {
+      type:'bar',
+      data:{
+          labels: generadorDistribucion.getIntervalos(),
+          datasets:[{
+              label: 'Frecuencias observadas',
+              data: generadorDistribucion.getFrecuenciasObservadas(),
+              backgroundColor: '#F8C471'
+          }]
+      },
+      options:{
+          scales:{
+              yAxes:{
+                  beginAtZero:true
+              }
+          }
+      }
+  });
+}
+
+function generarGraficoPoisson(): void {
+  limpiarGraficos();
+  graficoDistPoisson = new Chart(areaHistDistPoisson, {
       type:'bar',
       data:{
           labels: generadorDistribucion.getIntervalos(),
@@ -252,4 +415,8 @@ function generarGrafico(): void {
 function limpiarGraficos(): void {
   if (graficoDistUniforme != null)
     graficoDistUniforme.destroy();
+  if (graficoDistExponencial != null)
+    graficoDistExponencial.destroy();
+  if (graficoDistPoisson != null)
+    graficoDistPoisson.destroy();
 }

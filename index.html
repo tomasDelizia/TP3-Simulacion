@@ -236,6 +236,10 @@
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistExponencial" type="button" name="btnDistExponencial">Generar Distribución</button>
         </div>
 
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDescargarExponencial" type="button" name="btnDescargarExponencial">Descargar Serie</button>
+        </div>
+
         <div>
           <table id="tablaDistExponencial" class="table mx-3 mb-3">
             <thead>
@@ -252,6 +256,62 @@
             <tbody>
             </tbody>
           </table>
+        </div>
+
+        <div class="chart-container row mb-3 mx-3">
+          <canvas id="histogramaDistExponencial" ></canvas>
+        </div>
+        
+        <h3 class="text-center">Prueba Chi-Cuadrado</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaChiDistExponencial" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>F<sub>o</sub></th>
+                    <th>F<sub>e</sub></th>
+                    <th>C</th>
+                    <th>Σ C</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResChiExponencial">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResChiExponencial" name="txtResChiExponencial" id="" cols="30" rows="5"></textarea>
+        </div>
+
+        <h3 class="text-center">Prueba Kolmogorov-Smirnov</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaKSDistExponencial" class="table mx-3 mb-3">
+            <thead>
+              <tr>
+                <th>LI</th>
+                <th>LS</th>
+                <th>MC</th>
+                <th>P<sub>o</sub></th>
+                <th>F<sub>o</sub></th>
+                <th>P<sub>e</sub></th>
+                <th>F<sub>e</sub></th>
+                <th>Σ P<sub>o</sub></th>
+                <th>Σ P<sub>e</sub></th>
+                <th>|Σ P<sub>o</sub> - Σ P<sub>e</sub>|</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResKSExponencial">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResKSExponencial" name="txtResKSExponencial" id="" cols="30" rows="5"></textarea>
         </div>
 
         <hr>
@@ -274,6 +334,10 @@
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistPoisson" type="button" name="btnDistPoisson">Generar Distribución</button>
         </div>
 
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDescargarPoisson" type="button" name="btnDescargarPoisson">Descargar Serie</button>
+        </div>
+
         <div>
           <table id="tablaDistPoisson" class="table mx-3 mb-3">
             <thead>
@@ -289,6 +353,61 @@
             </tbody>
           </table>
         </div>
+
+        <div class="chart-container row mb-3 mx-3">
+        <canvas id="histogramaDistPoisson" ></canvas>
+      </div>
+      
+      <h3 class="text-center">Prueba Chi-Cuadrado</h3>
+
+      <div class="row mb-3 mx-3">
+        <table id="tablaChiDistPoisson" class="table mx-3 mb-3">
+          <thead>
+              <tr>
+                  <th>LI</th>
+                  <th>LS</th>
+                  <th>F<sub>o</sub></th>
+                  <th>F<sub>e</sub></th>
+                  <th>C</th>
+                  <th>Σ C</th>
+              </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mb-3 mx-3 row">
+        <label for="txtResChiPoisson">Resultado:</label>
+        <textarea class='form-control-plaintext'disabled id="txtResChiPoisson" name="txtResChiPoisson" id="" cols="30" rows="5"></textarea>
+      </div>
+
+      <h3 class="text-center">Prueba Kolmogorov-Smirnov</h3>
+
+      <div class="row mb-3 mx-3">
+        <table id="tablaKSDistPoisson" class="table mx-3 mb-3">
+          <thead>
+            <tr>
+              <th>LI</th>
+              <th>LS</th>
+              <th>MC</th>
+              <th>P<sub>o</sub></th>
+              <th>F<sub>o</sub></th>
+              <th>P<sub>e</sub></th>
+              <th>F<sub>e</sub></th>
+              <th>Σ P<sub>o</sub></th>
+              <th>Σ P<sub>e</sub></th>
+              <th>|Σ P<sub>o</sub> - Σ P<sub>e</sub>|</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mb-3 mx-3 row">
+          <label for="txtResKSPoisson">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResKSPoisson" name="txtResKSPoisson" id="" cols="30" rows="5"></textarea>
       </div>
 
     </form>

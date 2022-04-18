@@ -1,9 +1,11 @@
-import { GeneradorDistribucion } from "./GeneradorDistribucion";
-import { contarSi, factorial, quickSort } from "./utils";
+import { GeneradorDistribucion } from './GeneradorDistribucion';
+import { contarSi, factorial, quickSort } from './utils';
 
 export class GeneradorPoisson extends GeneradorDistribucion {
-
-  public async generarDistribucionPoisson(n: number, lambda: number): Promise<any> {
+  public async generarDistribucionPoisson(
+    n: number,
+    lambda: number
+  ): Promise<any> {
     this.n = n;
     this.rnds = [];
     this.tabla = [];
@@ -21,34 +23,44 @@ export class GeneradorPoisson extends GeneradorDistribucion {
     }
 
     quickSort(this.rnds);
+    console.log(this.rnds);
 
     const min: number = this.rnds[0];
     const max: number = this.rnds[n - 1];
-
     for (let i: number = min; i <= max; i++) {
       let valor: number = i;
       let frecObservada = contarSi(this.rnds, valor);
       let probObservada: number = frecObservada / n;
-      let probEsperada: number = Math.pow(lambda, valor) * Math.exp(-lambda) / factorial(valor);
+      let probEsperada: number =
+        (Math.pow(lambda, valor) * Math.exp(-lambda)) / factorial(valor);
       let frecEsperada: number = Math.round(probEsperada * n);
       this.tabla.push([
-        valor,
-        valor,
         valor,
         probObservada,
         frecObservada,
         probEsperada,
-        frecEsperada
+        frecEsperada,
       ]);
     }
   }
 
   public getIntervalos(): string[] {
     let valores: string[] = [];
-    for (let i: number = 0; i < this.rnds.length; i++) {
-      let valor: string = this.rnds[i][0];
+    for (let i: number = 0; i < this.tabla.length; i++) {
+      let valor: string = this.tabla[i][0].toString();
       valores.push(valor);
     }
     return valores;
+  }
+
+  public getFrecuenciasObservadas(): number[] {
+    let frecObservadas: number[] = [];
+    if (this.tabla != null) {
+      for (let i: number = 0; i < this.tabla.length; i++) {
+        let frecObservada: number = this.tabla[i][2];
+        frecObservadas.push(frecObservada);
+      }
+    }
+    return frecObservadas;
   }
 }

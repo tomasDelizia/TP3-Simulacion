@@ -72,7 +72,7 @@ export function contarEnRango(vec: number[], limInf: number, limSup: number): nu
 
 // Función que cuenta los elementos de un vector en un que sean iguales a un valor dado.
 export function contarSi(vec: number[], valor: number): number {
-  let contador: number = indiceMayor(vec, valor) - indiceMenor(vec, valor) + 1;
+  let contador: number = contarEnRango(vec,valor,valor+1);
   return contador;
 }
 
