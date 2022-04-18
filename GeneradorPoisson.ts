@@ -36,6 +36,8 @@ export class GeneradorPoisson extends GeneradorDistribucion {
       let frecEsperada: number = Math.round(probEsperada * n);
       this.tabla.push([
         valor,
+        valor,
+        valor,
         probObservada,
         frecObservada,
         probEsperada,
@@ -53,7 +55,7 @@ export class GeneradorPoisson extends GeneradorDistribucion {
     return valores;
   }
 
-  public getFrecuenciasObservadas(): number[] {
+  /*public getFrecuenciasObservadas(): number[] {
     let frecObservadas: number[] = [];
     if (this.tabla != null) {
       for (let i: number = 0; i < this.tabla.length; i++) {
@@ -62,5 +64,5 @@ export class GeneradorPoisson extends GeneradorDistribucion {
       }
     }
     return frecObservadas;
-  }
+  }*/
 }

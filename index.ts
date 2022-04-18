@@ -12,59 +12,123 @@ import { PruebaKS } from './PruebaKS';
 import './style.css';
 
 // Definición de los cuadros de texto de la interfaz de usuario.
-const txtCantNros: HTMLInputElement = document.getElementById("txtCantNros") as HTMLInputElement;
-const txtA: HTMLInputElement = document.getElementById("txtA") as HTMLInputElement;
-const txtB: HTMLInputElement = document.getElementById("txtB") as HTMLInputElement;
-const txtMedia: HTMLInputElement = document.getElementById("txtMedia") as HTMLInputElement;
-const txtDesviacionEstandar: HTMLInputElement = document.getElementById("txtDesviacionEstandar") as HTMLInputElement;
-const txtLambdaExponencial: HTMLInputElement = document.getElementById("txtLambdaExponencial") as HTMLInputElement;
-const txtLambdaPoisson: HTMLInputElement = document.getElementById("txtLambdaPoisson") as HTMLInputElement;
+const txtCantNros: HTMLInputElement = document.getElementById(
+  'txtCantNros'
+) as HTMLInputElement;
+const txtA: HTMLInputElement = document.getElementById(
+  'txtA'
+) as HTMLInputElement;
+const txtB: HTMLInputElement = document.getElementById(
+  'txtB'
+) as HTMLInputElement;
+const txtMedia: HTMLInputElement = document.getElementById(
+  'txtMedia'
+) as HTMLInputElement;
+const txtDesviacionEstandar: HTMLInputElement = document.getElementById(
+  'txtDesviacionEstandar'
+) as HTMLInputElement;
+const txtLambdaExponencial: HTMLInputElement = document.getElementById(
+  'txtLambdaExponencial'
+) as HTMLInputElement;
+const txtLambdaPoisson: HTMLInputElement = document.getElementById(
+  'txtLambdaPoisson'
+) as HTMLInputElement;
 
 // Definición de los combo Box de la interfaz de usuario.
-const cboCantIntervalos: HTMLSelectElement = document.getElementById("cboCantIntervalos") as HTMLSelectElement;
-const cboMetodoGeneracion: HTMLSelectElement = document.getElementById("cboMetodoGeneracion") as HTMLSelectElement;
-const cboDistribucion: HTMLSelectElement = document.getElementById("cboDistribucion") as HTMLSelectElement;
+const cboCantIntervalos: HTMLSelectElement = document.getElementById(
+  'cboCantIntervalos'
+) as HTMLSelectElement;
+const cboMetodoGeneracion: HTMLSelectElement = document.getElementById(
+  'cboMetodoGeneracion'
+) as HTMLSelectElement;
+const cboDistribucion: HTMLSelectElement = document.getElementById(
+  'cboDistribucion'
+) as HTMLSelectElement;
 
 // Definición de botones de la interfaz de usuario.
-const btnDistUniforme: HTMLButtonElement = document.getElementById('btnDistUniforme') as HTMLButtonElement;
-const btnDistNormal: HTMLButtonElement = document.getElementById('btnDistNormal') as HTMLButtonElement;
-const btnDistExponencial: HTMLButtonElement = document.getElementById('btnDistExponencial') as HTMLButtonElement;
-const btnDistPoisson: HTMLButtonElement = document.getElementById('btnDistPoisson') as HTMLButtonElement;
-const btnDescargarUniforme: HTMLButtonElement = document.getElementById('btnDescargarUniforme') as HTMLButtonElement;
-const btnDescargarExponencial: HTMLButtonElement = document.getElementById('btnDescargarExponencial') as HTMLButtonElement;
-const btnDescargarPoisson: HTMLButtonElement = document.getElementById('btnDescargarPoisson') as HTMLButtonElement;
-
+const btnDistUniforme: HTMLButtonElement = document.getElementById(
+  'btnDistUniforme'
+) as HTMLButtonElement;
+const btnDistNormal: HTMLButtonElement = document.getElementById(
+  'btnDistNormal'
+) as HTMLButtonElement;
+const btnDistExponencial: HTMLButtonElement = document.getElementById(
+  'btnDistExponencial'
+) as HTMLButtonElement;
+const btnDistPoisson: HTMLButtonElement = document.getElementById(
+  'btnDistPoisson'
+) as HTMLButtonElement;
+const btnDescargarUniforme: HTMLButtonElement = document.getElementById(
+  'btnDescargarUniforme'
+) as HTMLButtonElement;
+const btnDescargarExponencial: HTMLButtonElement = document.getElementById(
+  'btnDescargarExponencial'
+) as HTMLButtonElement;
+const btnDescargarPoisson: HTMLButtonElement = document.getElementById(
+  'btnDescargarPoisson'
+) as HTMLButtonElement;
 
 // Definición de las secciones de cada distribución.
-const divDistUniforme: HTMLDivElement = document.getElementById('distUniforme') as HTMLDivElement;
-const divDistNormal: HTMLDivElement = document.getElementById('distNormal') as HTMLDivElement;
-const divDistExponencial: HTMLDivElement = document.getElementById('distExponencial') as HTMLDivElement;
-const divDistPoisson: HTMLDivElement = document.getElementById('distPoisson') as HTMLDivElement;
+const divDistUniforme: HTMLDivElement = document.getElementById(
+  'distUniforme'
+) as HTMLDivElement;
+const divDistNormal: HTMLDivElement = document.getElementById(
+  'distNormal'
+) as HTMLDivElement;
+const divDistExponencial: HTMLDivElement = document.getElementById(
+  'distExponencial'
+) as HTMLDivElement;
+const divDistPoisson: HTMLDivElement = document.getElementById(
+  'distPoisson'
+) as HTMLDivElement;
 
 // Definición de las tablas de la interfaz de usuario.
-const tablaDistUniforme: HTMLTableElement = document.getElementById('tablaDistUniforme') as HTMLTableElement;
-const tablaDistNormal: HTMLTableElement = document.getElementById('tablaDistNormal') as HTMLTableElement;
-const tablaDistExponencial: HTMLTableElement = document.getElementById('tablaDistExponencial') as HTMLTableElement;
-const tablaDistPoisson: HTMLTableElement = document.getElementById('tablaDistPoisson') as HTMLTableElement;
-const tablaChiDistUniforme: HTMLTableElement = document.getElementById('tablaChiDistUniforme') as HTMLTableElement;
-const tablaKSDistUniforme: HTMLTableElement = document.getElementById('tablaKSDistUniforme') as HTMLTableElement;
-const tablaChiDistExponencial:HTMLTableElement = document.getElementById('tablaChiDistExponencial') as HTMLTableElement;
-const tablaKSDistExponencial: HTMLTableElement = document.getElementById('tablaKSDistExponencial') as HTMLTableElement;
-const tablaChiDistPoisson:HTMLTableElement = document.getElementById('tablaChiDistPoisson') as HTMLTableElement;
-const tablaKSDistPoisson: HTMLTableElement = document.getElementById('tablaKSDistPoisson') as HTMLTableElement;
-
-
+const tablaDistUniforme: HTMLTableElement = document.getElementById(
+  'tablaDistUniforme'
+) as HTMLTableElement;
+const tablaDistNormal: HTMLTableElement = document.getElementById(
+  'tablaDistNormal'
+) as HTMLTableElement;
+const tablaDistExponencial: HTMLTableElement = document.getElementById(
+  'tablaDistExponencial'
+) as HTMLTableElement;
+const tablaDistPoisson: HTMLTableElement = document.getElementById(
+  'tablaDistPoisson'
+) as HTMLTableElement;
+const tablaChiDistUniforme: HTMLTableElement = document.getElementById(
+  'tablaChiDistUniforme'
+) as HTMLTableElement;
+const tablaKSDistUniforme: HTMLTableElement = document.getElementById(
+  'tablaKSDistUniforme'
+) as HTMLTableElement;
+const tablaChiDistExponencial: HTMLTableElement = document.getElementById(
+  'tablaChiDistExponencial'
+) as HTMLTableElement;
+const tablaKSDistExponencial: HTMLTableElement = document.getElementById(
+  'tablaKSDistExponencial'
+) as HTMLTableElement;
+const tablaChiDistPoisson: HTMLTableElement = document.getElementById(
+  'tablaChiDistPoisson'
+) as HTMLTableElement;
 
 // Definición de los cuadros con los resultados de las hipótesis.
-const txtResChiUniforme: HTMLTextAreaElement = document.getElementById('txtResChiUniforme') as HTMLTextAreaElement;
-const txtResKSUniforme: HTMLTextAreaElement = document.getElementById('txtResKSUniforme') as HTMLTextAreaElement;
+const txtResChiUniforme: HTMLTextAreaElement = document.getElementById(
+  'txtResChiUniforme'
+) as HTMLTextAreaElement;
+const txtResKSUniforme: HTMLTextAreaElement = document.getElementById(
+  'txtResKSUniforme'
+) as HTMLTextAreaElement;
 
-const txtResChiExponencial: HTMLTextAreaElement = document.getElementById('txtResChiExponencial') as HTMLTextAreaElement;
-const txtResKSExponencial: HTMLTextAreaElement = document.getElementById('txtResKSExponencial') as HTMLTextAreaElement;
+const txtResChiExponencial: HTMLTextAreaElement = document.getElementById(
+  'txtResChiExponencial'
+) as HTMLTextAreaElement;
+const txtResKSExponencial: HTMLTextAreaElement = document.getElementById(
+  'txtResKSExponencial'
+) as HTMLTextAreaElement;
 
-const txtResChiPoisson: HTMLTextAreaElement = document.getElementById('txtResChiPoisson') as HTMLTextAreaElement;
-const txtResKSPoisson: HTMLTextAreaElement = document.getElementById('txtResKSPoisson') as HTMLTextAreaElement;
-
+const txtResChiPoisson: HTMLTextAreaElement = document.getElementById(
+  'txtResChiPoisson'
+) as HTMLTextAreaElement;
 
 // Definición del generador de archivos CSV.
 const generadorCSV: GeneradorCSV = new GeneradorCSV();
@@ -85,35 +149,41 @@ const pruebaChiCuadrado: PruebaBondad = new PruebaChiCuadrado();
 const pruebaKS: PruebaBondad = new PruebaKS();
 
 // Definición del histograma de frecuencias.
-const histogramaDistUniforme: HTMLCanvasElement = document.getElementById('histogramaDistUniforme') as HTMLCanvasElement;
+const histogramaDistUniforme: HTMLCanvasElement = document.getElementById(
+  'histogramaDistUniforme'
+) as HTMLCanvasElement;
 const areaHistDistUniforme = histogramaDistUniforme.getContext('2d');
 let graficoDistUniforme: Chart;
 
-const histogramaDistExponencial: HTMLCanvasElement = document.getElementById('histogramaDistExponencial') as HTMLCanvasElement;
+const histogramaDistExponencial: HTMLCanvasElement = document.getElementById(
+  'histogramaDistExponencial'
+) as HTMLCanvasElement;
 const areaHistDistExponencial = histogramaDistExponencial.getContext('2d');
 let graficoDistExponencial: Chart;
 
-const histogramaDistPoisson: HTMLCanvasElement = document.getElementById('histogramaDistPoisson') as HTMLCanvasElement;
+const histogramaDistPoisson: HTMLCanvasElement = document.getElementById(
+  'histogramaDistPoisson'
+) as HTMLCanvasElement;
 const areaHistDistPoisson = histogramaDistPoisson.getContext('2d');
 let graficoDistPoisson: Chart;
 
-// Dispara la generación de un archivo csv 
+// Dispara la generación de un archivo csv
 btnDescargarUniforme.addEventListener('click', generarArchivo);
-btnDescargarExponencial.addEventListener('click',generarArchivo);
+btnDescargarExponencial.addEventListener('click', generarArchivo);
 btnDescargarPoisson.addEventListener('click', generarArchivo);
 
 // Genera un archivo CSV que contiene los números aleatorios generados.
 function generarArchivo(): void {
-    generadorCSV.generarArchivo(generadorDistribucion.getRnds(), 'Serie');
+  generadorCSV.generarArchivo(generadorDistribucion.getRnds(), 'Serie');
 }
 
 // Ocultamos las secciones hasta que no se seleccione la distribución.
 function ocultarSeccion(div: HTMLDivElement): void {
-  div.style.display = "none";
+  div.style.display = 'none';
 }
 
 function mostrarSeccion(div: HTMLDivElement): void {
-  div.style.display = "block";
+  div.style.display = 'block';
 }
 
 ocultarSeccion(divDistUniforme);
@@ -124,13 +194,13 @@ ocultarSeccion(divDistPoisson);
 // Mostramos la sección correspondiente a la distribución elegida.
 cboDistribucion.addEventListener('input', () => {
   switch (cboDistribucion.value) {
-    case "0":
+    case '0':
       ocultarSeccion(divDistUniforme);
       ocultarSeccion(divDistNormal);
       ocultarSeccion(divDistExponencial);
       ocultarSeccion(divDistPoisson);
       cboMetodoGeneracion.disabled = false;
-    case "1":
+    case '1':
       generadorDistribucion = new GeneradorUniforme();
       mostrarSeccion(divDistUniforme);
       ocultarSeccion(divDistNormal);
@@ -139,7 +209,7 @@ cboDistribucion.addEventListener('input', () => {
       cboMetodoGeneracion.disabled = false;
       btnDescargarUniforme.disabled = true;
       break;
-    case "2":
+    case '2':
       generadorDistribucion = new GeneradorNormal();
       mostrarSeccion(divDistNormal);
       ocultarSeccion(divDistUniforme);
@@ -147,7 +217,7 @@ cboDistribucion.addEventListener('input', () => {
       ocultarSeccion(divDistPoisson);
       cboMetodoGeneracion.disabled = false;
       break;
-    case "3":
+    case '3':
       generadorDistribucion = new GeneradorExponencial();
       mostrarSeccion(divDistExponencial);
       ocultarSeccion(divDistNormal);
@@ -156,7 +226,7 @@ cboDistribucion.addEventListener('input', () => {
       cboMetodoGeneracion.disabled = false;
       btnDescargarExponencial.disabled = true;
       break;
-    case "4":
+    case '4':
       generadorDistribucion = new GeneradorPoisson();
       mostrarSeccion(divDistPoisson);
       ocultarSeccion(divDistNormal);
@@ -171,7 +241,13 @@ cboDistribucion.addEventListener('input', () => {
 btnDistUniforme.addEventListener('click', async () => {
   if (validarParametrosUniforme()) {
     limpiarTabla(tablaDistUniforme);
-    await generadorDistribucion.generarDistribucionUniforme(n, metodo, cantIntervalos, a, b);
+    await generadorDistribucion.generarDistribucionUniforme(
+      n,
+      metodo,
+      cantIntervalos,
+      a,
+      b
+    );
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
       agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistUniforme);
     }
@@ -195,18 +271,29 @@ btnDistUniforme.addEventListener('click', async () => {
 });
 
 btnDistExponencial.addEventListener('click', async () => {
-  if (validarParametrosExponencial()){
+  if (validarParametrosExponencial()) {
     limpiarTabla(tablaDistExponencial);
-    await generadorDistribucion.generarDistribucionExponencial(n,metodo,cantIntervalos,lambda);
+    await generadorDistribucion.generarDistribucionExponencial(
+      n,
+      metodo,
+      cantIntervalos,
+      lambda
+    );
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistExponencial);
+      agregarFilaATabla(
+        generadorDistribucion.getTabla()[i],
+        tablaDistExponencial
+      );
     }
     btnDescargarExponencial.disabled = false;
     generarGraficoExponencial();
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);
     for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
-      agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistExponencial);
+      agregarFilaATabla(
+        pruebaChiCuadrado.getTabla()[i],
+        tablaChiDistExponencial
+      );
     }
     txtResChiExponencial.value = pruebaChiCuadrado.validarHipotesis();
 
@@ -220,11 +307,17 @@ btnDistExponencial.addEventListener('click', async () => {
 });
 
 btnDistPoisson.addEventListener('click', async () => {
-  if (validarParametrosPoisson()){
+  if (validarParametrosPoisson()) {
     limpiarTabla(tablaDistExponencial);
     await generadorDistribucion.generarDistribucionPoisson(n, lambda);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistPoisson);
+      var fila = generadorDistribucion.getTabla()[i];
+      var filaNueva = [];
+      for (let j: number = 0; j < fila.length; j++) {
+        if (j != 1 && j != 2) filaNueva.push(fila[j]);
+      }
+      agregarFilaATabla(filaNueva, tablaDistPoisson);
+      /*var filaNueva = [fila[0],fila[3],fila[4],fila[5],fila[6]]*/
     }
     btnDescargarPoisson.disabled = false;
     generarGraficoPoisson();
@@ -234,26 +327,19 @@ btnDistPoisson.addEventListener('click', async () => {
       agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistPoisson);
     }
     txtResChiPoisson.value = pruebaChiCuadrado.validarHipotesis();
-
-    // Realizamos la prueba KS.
-    await pruebaKS.probar(generadorDistribucion);
-    for (let i: number = 0; i < pruebaKS.getTabla().length; i++) {
-      agregarFilaATabla(pruebaKS.getTabla()[i], tablaKSDistPoisson);
-    }
-    txtResKSPoisson.value = pruebaKS.validarHipotesis();
   }
 });
 
 function validarParametrosUniforme(): boolean {
-  if (cboCantIntervalos.value == "0") {
+  if (cboCantIntervalos.value == '0') {
     alert('Ingrese la cantidad de intervalos');
     return false;
   }
-  if (cboMetodoGeneracion.value == "0") {
+  if (cboMetodoGeneracion.value == '0') {
     alert('Ingrese el método de generación de números aletorios');
     return false;
   }
-  if (txtCantNros.value == "" || txtA.value == "" || txtB.value == "") {
+  if (txtCantNros.value == '' || txtA.value == '' || txtB.value == '') {
     alert('Tiene que ingresar todos los parámetros solicitados.');
     return false;
   }
@@ -273,16 +359,16 @@ function validarParametrosUniforme(): boolean {
   return true;
 }
 
-function validarParametrosExponencial() : boolean {
-  if (cboCantIntervalos.value == "0") {
+function validarParametrosExponencial(): boolean {
+  if (cboCantIntervalos.value == '0') {
     alert('Ingrese la cantidad de intervalos');
     return false;
   }
-  if (cboMetodoGeneracion.value == "0") {
+  if (cboMetodoGeneracion.value == '0') {
     alert('Ingrese el método de generación de números aletorios');
     return false;
   }
-  if (txtCantNros.value == "" || txtLambdaExponencial.value == "") {
+  if (txtCantNros.value == '' || txtLambdaExponencial.value == '') {
     alert('Tiene que ingresar todos los parámetros solicitados.');
     return false;
   }
@@ -297,12 +383,12 @@ function validarParametrosExponencial() : boolean {
   return true;
 }
 
-function validarParametrosPoisson() : boolean {
-  if (cboCantIntervalos.value == "0") {
+function validarParametrosPoisson(): boolean {
+  if (cboCantIntervalos.value == '0') {
     alert('Ingrese la cantidad de intervalos');
     return false;
   }
-  if (txtCantNros.value == "" || txtLambdaPoisson.value == "") {
+  if (txtCantNros.value == '' || txtLambdaPoisson.value == '') {
     alert('Tiene que ingresar todos los parámetros solicitados.');
     return false;
   }
@@ -325,98 +411,103 @@ function limpiarParametros(): void {
   txtLambdaExponencial.value = '';
   txtLambdaPoisson.value = '';
   txtDesviacionEstandar.value = '';
-  cboCantIntervalos.value = "0";
-  cboDistribucion.value = "0";
-  cboMetodoGeneracion.value = "0";
+  cboCantIntervalos.value = '0';
+  cboDistribucion.value = '0';
+  cboMetodoGeneracion.value = '0';
 }
 
 // Función que elimina todas las filas de la tabla HTML excepto los encabezados.
 function limpiarTabla(tabla: HTMLTableElement) {
-  for(let i: number = tabla.rows.length; i > 1; i--) {
-      tabla.deleteRow(i - 1);
+  for (let i: number = tabla.rows.length; i > 1; i--) {
+    tabla.deleteRow(i - 1);
   }
 }
 
 // Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
 function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
-  let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
+  let filaHTML: HTMLTableRowElement = tabla
+    .getElementsByTagName('tbody')[0]
+    .insertRow();
   for (let i: number = 0; i < fila.length; i++) {
-      let celda = filaHTML.insertCell();
-      celda.appendChild(document.createTextNode(String(fila[i])));
+    let celda = filaHTML.insertCell();
+    celda.appendChild(document.createTextNode(String(fila[i])));
   }
 }
 
 function generarGraficoUniforme(): void {
   limpiarGraficos();
   graficoDistUniforme = new Chart(areaHistDistUniforme, {
-      type:'bar',
-      data:{
-          labels: generadorDistribucion.getIntervalos(),
-          datasets:[{
-              label: 'Frecuencias observadas',
-              data: generadorDistribucion.getFrecuenciasObservadas(),
-              backgroundColor: '#F8C471'
-          }]
+    type: 'bar',
+    data: {
+      labels: generadorDistribucion.getIntervalos(),
+      datasets: [
+        {
+          label: 'Frecuencias observadas',
+          data: generadorDistribucion.getFrecuenciasObservadas(),
+          backgroundColor: '#F8C471',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: {
+          beginAtZero: true,
+        },
       },
-      options:{
-          scales:{
-              yAxes:{
-                  beginAtZero:true
-              }
-          }
-      }
+    },
   });
 }
 
 function generarGraficoExponencial(): void {
   limpiarGraficos();
   graficoDistExponencial = new Chart(areaHistDistExponencial, {
-      type:'bar',
-      data:{
-          labels: generadorDistribucion.getIntervalos(),
-          datasets:[{
-              label: 'Frecuencias observadas',
-              data: generadorDistribucion.getFrecuenciasObservadas(),
-              backgroundColor: '#F8C471'
-          }]
+    type: 'bar',
+    data: {
+      labels: generadorDistribucion.getIntervalos(),
+      datasets: [
+        {
+          label: 'Frecuencias observadas',
+          data: generadorDistribucion.getFrecuenciasObservadas(),
+          backgroundColor: '#F8C471',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: {
+          beginAtZero: true,
+        },
       },
-      options:{
-          scales:{
-              yAxes:{
-                  beginAtZero:true
-              }
-          }
-      }
+    },
   });
 }
 
 function generarGraficoPoisson(): void {
   limpiarGraficos();
   graficoDistPoisson = new Chart(areaHistDistPoisson, {
-      type:'bar',
-      data:{
-          labels: generadorDistribucion.getIntervalos(),
-          datasets:[{
-              label: 'Frecuencias observadas',
-              data: generadorDistribucion.getFrecuenciasObservadas(),
-              backgroundColor: '#F8C471'
-          }]
+    type: 'bar',
+    data: {
+      labels: generadorDistribucion.getIntervalos(),
+      datasets: [
+        {
+          label: 'Frecuencias observadas',
+          data: generadorDistribucion.getFrecuenciasObservadas(),
+          backgroundColor: '#F8C471',
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: {
+          beginAtZero: true,
+        },
       },
-      options:{
-          scales:{
-              yAxes:{
-                  beginAtZero:true
-              }
-          }
-      }
+    },
   });
 }
 
 function limpiarGraficos(): void {
-  if (graficoDistUniforme != null)
-    graficoDistUniforme.destroy();
-  if (graficoDistExponencial != null)
-    graficoDistExponencial.destroy();
-  if (graficoDistPoisson != null)
-    graficoDistPoisson.destroy();
+  if (graficoDistUniforme != null) graficoDistUniforme.destroy();
+  if (graficoDistExponencial != null) graficoDistExponencial.destroy();
+  if (graficoDistPoisson != null) graficoDistPoisson.destroy();
 }
