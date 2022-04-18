@@ -34,6 +34,16 @@ const divDistExponencial: HTMLDivElement = document.getElementById('distExponenc
 const divDistPoisson: HTMLDivElement = document.getElementById('distPoisson') as 
 HTMLDivElement;
 
+// Definición de los parámetros.
+let n: number;
+let cantIntervalos: number;
+let metodo: string;
+let a: number;
+let b: number;
+let media: number;
+let desviacion: number;
+let lambda: number;
+
 // Definición del generador de números pseudoaleatorios U(0, 1).
 let generadorNumeros: GeneradorNumeros;
 
@@ -100,13 +110,36 @@ cboDistribucion.addEventListener('input', () => {
 
 // Dispara la generación de números aleatorios con distribución uniforme (A, B).
 btnDistUniforme.addEventListener('click', () => {
-  if (validarParametrosUniforme())
-    generadorDistribucion.generarDistribucionUniforme()
+  if (validarParametrosUniforme()) {
+    generadorDistribucion.generarDistribucionUniforme(b, metodo, cantIntervalos, a, b);
+  }
 });
 
 function validarParametrosUniforme(): boolean {
+  if (cboCantIntervalos.value == "0") {
+    alert('Ingrese la cantidad de intervalos');
+    return false;
+  }
+  if (cboMetodoGeneracion.value == "0") {
+    alert('Ingrese el método de generación de números aletorios');
+    return false;
+  }
   if (txtCantNros.value == "" || txtA.value == "" || txtB.value == "") {
     alert('Tiene que ingresar todos los parámetros solicitados.');
     return false;
   }
+  n = Number(txtCantNros.value);
+  a = Number(txtA.value);
+  b = Number(txtB.value);
+  metodo = cboMetodoGeneracion.value;
+  cantIntervalos = Number(cboCantIntervalos.value);
+  if (n <= 0) {
+    alert('La cantidad de números a generar debe ser mayor a cero.');
+    return false;
+  }
+  if (a > b) {
+    alert('El valor de "b" debe ser mayor a "a".');
+    return false;
+  }
+  return true;
 }

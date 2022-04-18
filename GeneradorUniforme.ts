@@ -11,10 +11,10 @@ export class GeneradorUniforme extends GeneradorDistribucion {
     this.tabla = [];
 
     switch (metodo) {
-      case 'generador-js':
+      case '1':
         this.generador = new GeneradorLenguaje();
         break;
-      case 'generador-lineal':
+      case '2':
         this.generador = new GeneradorLineal();
         break;
     }
