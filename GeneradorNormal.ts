@@ -5,7 +5,7 @@ import { contarEnRango, quickSort } from "./utils";
 
 export class GeneradorNormal extends GeneradorDistribucion {
 
-  public async generarDistribucion(n: number, metodo: string, cantIntervalos: number, media: number, desviacion: number, metodoNormal: string): Promise<any> {
+  public async generarDistribucionNormal(n: number, metodo: string, cantIntervalos: number, media: number, desviacion: number, metodoNormal: string): Promise<any> {
     this.n = n;
     this.rnds = [];
     this.tabla = [];

@@ -3,7 +3,7 @@ import { contarSi, factorial, quickSort } from "./utils";
 
 export class GeneradorPoisson extends GeneradorDistribucion {
 
-  public async generarDistribucion(n: number, lambda: number): Promise<any> {
+  public async generarDistribucionPoisson(n: number, lambda: number): Promise<any> {
     this.n = n;
     this.rnds = [];
     this.tabla = [];
