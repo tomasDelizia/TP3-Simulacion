@@ -1,12 +1,465 @@
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TP3 Simulación</title>
-  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
-</head>
-<body>
-  <h1>TP3 Simulación</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TP3 Simulación</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="./style.css"/>
+  </head>
+  <body>
+    <h1 class="text-center">Trabajo Práctico N°3 de Simulación</h1>
+    <h2 class="text-center">Variables Aleatorias</h2>
+    
+    <form>
+      <div class="row mb-3 mx-3">
+        <div class="col">
+          <label class="form-label" for="txtCantNros"
+            >Cantidad de números a generar (N):</label
+          >
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            id="txtCantNros"
+            name="txtCantNros"
+          />
+        </div>
+
+        <div class="col">
+          <label class="form-label" for="cboDistribucion"
+            >Distribución:
+          </label>
+          <select class="form-select mb-3" id="cboDistribucion">
+            <option value="0" selected>Seleccione una distribución...</option>
+            <option value="uniforme">Distribución Uniforme</option>
+            <option value="normal">Distribución Normal</option>
+            <option value="exponencial">Distribución Exponencial</option>
+            <option value="poisson">Distribución Poisson</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="row mb-3 mx-3">
+        <div class="col">
+          <label class="form-label" for="cboMetodoGeneracion"
+            >Método de generación de RNDs U(0, 1):</label
+          >
+          <select class="form-select mb-3" id="cboMetodoGeneracion">
+            <option value="0" selected>Seleccione un método...</option>
+            <option value="1">Generador JavaScript</option>
+            <option value="2">Generador Congruencial Mixto</option>
+          </select>
+        </div>
+
+        <div class="col">
+          <label class="form-label" for="cboCantIntervalos"
+            >Cantidad de intervalos (K):</label
+          >
+          <select class="form-select mb-3" id="cboCantIntervalos">
+            <option value="0" selected>Seleccione un valor...</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <!-- Distribución Uniforme -->
+      <div id="distUniforme">
+        <div class="row mb-3 mx-3">
+          <h6>Distribución Uniforme</h6>
+
+          <div class="col">
+            <label for="txtA"> A: </label>
+            <input type="number" 
+            placeholder="Ingrese un valor..."
+            class="form-control form-control-sm"
+            id="txtA">
+          </div>
+
+          <div class="col">
+              <label for="txtB"> B: </label>
+              <input type="number"
+              placeholder="Ingrese un valor..."
+              class="form-control form-control-sm"
+              id="txtB">
+          </div>
+        </div>
+        
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDistUniforme" type="button" name="btnDistUniforme">Generar Distribución</button>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDescargarUniforme" type="button" name="btnDescargarUniforme">Descargar Serie</button>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaDistUniforme" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>MC</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="chart-container row mb-3 mx-3">
+          <canvas id="histogramaDistUniforme" ></canvas>
+        </div>
+
+        <h3 class="text-center">Prueba Chi-Cuadrado</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaChiDistUniforme" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>F<sub>o</sub></th>
+                    <th>F<sub>e</sub></th>
+                    <th>C</th>
+                    <th>Σ C</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResChiUniforme">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResChiUniforme" name="txtResChiUniforme" id="" cols="30" rows="5"></textarea>
+        </div>
+
+        <h3 class="text-center">Prueba Kolmogorov-Smirnov</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaKSDistUniforme" class="table mx-3 mb-3">
+            <thead>
+              <tr>
+                <th>LI</th>
+                <th>LS</th>
+                <th>MC</th>
+                <th>P<sub>o</sub></th>
+                <th>F<sub>o</sub></th>
+                <th>P<sub>e</sub></th>
+                <th>F<sub>e</sub></th>
+                <th>Σ P<sub>o</sub></th>
+                <th>Σ P<sub>e</sub></th>
+                <th>|Σ P<sub>o</sub> - Σ P<sub>e</sub>|</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResKSUniforme">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResKSUniforme" name="txtResKSUniforme" id="" cols="30" rows="5"></textarea>
+        </div>  
+
+        <hr>
+
+      </div>
+
+      <!-- Distribución Normal -->
+      <div id="distNormal">
+        <div class="row mb-3 mx-3">
+          <h6>Distribución Normal</h6>
+          <div class="col-sm-8">
+            <label for="txtMedia">Media: </label>
+            <input type="number"
+            placeholder="Ingrese un valor..."
+            class="form-control form-control-sm"
+            id="txtMedia">
+          </div>
+
+          <div class="col-sm-8">
+            <label for="txtDesviacionEstandar"> Desviación Estandar:</label>
+            <input type="number"
+            placeholder="Ingrese un valor..."
+            class="form-control form-control-sm"
+            id="txtDesviacionEstandar">
+          </div>
+        
+          <div class="col-sm-8">
+            <label class="form-label" for="cboMetodoDistNormal"
+              >Método de generación de variables aleatorias normales:</label
+            >
+            <select class="form-select " id="cboMetodoDistNormal">
+              <option value="0" selected>Seleccione un valor...</option>
+              <option value="box-muller">Box-Muller</option>
+              <option value="convolucion">Convolución</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistNormal" type="button" name="btnDistNormal">Generar Distribución</button>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDescargarNormal" type="button" name="btnDescargarNormal">Descargar Serie</button>
+        </div>
+
+        <div>
+          <table id="tablaDistNormal" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>MC</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="chart-container row mb-3 mx-3">
+          <canvas id="histogramaDistNormal" ></canvas>
+        </div>
+
+        <h3 class="text-center">Prueba Chi-Cuadrado</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaChiDistNormal" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>F<sub>o</sub></th>
+                    <th>F<sub>e</sub></th>
+                    <th>C</th>
+                    <th>Σ C</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResChiNormal">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResChiNormal" name="txtResChiNormal" id="" cols="30" rows="5"></textarea>
+        </div>
+
+        <h3 class="text-center">Prueba Kolmogorov-Smirnov</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaKSDistNormal" class="table mx-3 mb-3">
+            <thead>
+              <tr>
+                <th>LI</th>
+                <th>LS</th>
+                <th>MC</th>
+                <th>P<sub>o</sub></th>
+                <th>F<sub>o</sub></th>
+                <th>P<sub>e</sub></th>
+                <th>F<sub>e</sub></th>
+                <th>Σ P<sub>o</sub></th>
+                <th>Σ P<sub>e</sub></th>
+                <th>|Σ P<sub>o</sub> - Σ P<sub>e</sub>|</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResKSNormal">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResKSNormal" name="txtResKSNormal" id="" cols="30" rows="5"></textarea>
+        </div>  
+
+        <hr>
+
+      </div>
+
+      <!-- Distribución Exponencial -->
+      <div id="distExponencial">
+        <div class="row mb-3 mx-3">
+          <h6>Distribución Exponencial</h6>
+          <div class="col">
+            <label for="txtLambdaExponencial">Lambda:</label>
+            <input type="number"
+            placeholder="Ingrese un valor..."
+            class="form-control form-control-sm"
+            id="txtLambdaExponencial">
+          </div>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistExponencial" type="button" name="btnDistExponencial">Generar Distribución</button>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDescargarExponencial" type="button" name="btnDescargarExponencial">Descargar Serie</button>
+        </div>
+
+        <div>
+          <table id="tablaDistExponencial" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>MC</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="chart-container row mb-3 mx-3">
+          <canvas id="histogramaDistExponencial" ></canvas>
+        </div>
+        
+        <h3 class="text-center">Prueba Chi-Cuadrado</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaChiDistExponencial" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>F<sub>o</sub></th>
+                    <th>F<sub>e</sub></th>
+                    <th>C</th>
+                    <th>Σ C</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResChiExponencial">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResChiExponencial" name="txtResChiExponencial" id="" cols="30" rows="5"></textarea>
+        </div>
+
+        <h3 class="text-center">Prueba Kolmogorov-Smirnov</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaKSDistExponencial" class="table mx-3 mb-3">
+            <thead>
+              <tr>
+                <th>LI</th>
+                <th>LS</th>
+                <th>MC</th>
+                <th>P<sub>o</sub></th>
+                <th>F<sub>o</sub></th>
+                <th>P<sub>e</sub></th>
+                <th>F<sub>e</sub></th>
+                <th>Σ P<sub>o</sub></th>
+                <th>Σ P<sub>e</sub></th>
+                <th>|Σ P<sub>o</sub> - Σ P<sub>e</sub>|</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResKSExponencial">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResKSExponencial" name="txtResKSExponencial" id="" cols="30" rows="5"></textarea>
+        </div>
+
+        <hr>
+
+      </div>
+
+      <!-- Distribución Poisson -->
+      <div id="distPoisson">
+        <div class="row mb-3 mx-3">
+          <h6>Distribución Poisson</h6>
+          <div class="col">
+            <label for="txtLambdaPoisson">Lambda:</label>
+            <input type="number"
+            placeholder="Ingrese un valor..."
+            class="form-control form-control-sm"
+            id="txtLambdaPoisson">
+          </div>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistPoisson" type="button" name="btnDistPoisson">Generar Distribución</button>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDescargarPoisson" type="button" name="btnDescargarPoisson">Descargar Serie</button>
+        </div>
+
+        <div>
+          <table id="tablaDistPoisson" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>Valor</th>
+                    <th>P<sub>o</sub></th>
+                    <th>F<sub>o</sub></th>
+                    <th>P<sub>e</sub></th>
+                    <th>F<sub>e</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="chart-container row mb-3 mx-3">
+        <canvas id="histogramaDistPoisson" ></canvas>
+      </div>
+      
+      <h3 class="text-center">Prueba Chi-Cuadrado</h3>
+
+      <div class="row mb-3 mx-3">
+        <table id="tablaChiDistPoisson" class="table mx-3 mb-3">
+          <thead>
+              <tr>
+                  <th>LI</th>
+                  <th>LS</th>
+                  <th>F<sub>o</sub></th>
+                  <th>F<sub>e</sub></th>
+                  <th>C</th>
+                  <th>Σ C</th>
+              </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mb-3 mx-3 row">
+        <label for="txtResChiPoisson">Resultado:</label>
+        <textarea class='form-control-plaintext'disabled id="txtResChiPoisson" name="txtResChiPoisson" id="" cols="30" rows="5"></textarea>
+      </div>
+
+    </form>
+  </body>
 </html>
