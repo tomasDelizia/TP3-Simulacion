@@ -1,7 +1,7 @@
 import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
-import { contarEnRango, quickSort } from "./utils";
+import { Utils } from "./Utils";
 
 export class GeneradorExponencial extends GeneradorDistribucion {
 
@@ -25,7 +25,7 @@ export class GeneradorExponencial extends GeneradorDistribucion {
       this.rnds.push(rnd);
     }
 
-    quickSort(this.rnds);
+    Utils.quickSort(this.rnds);
 
     const min: number = Math.floor(this.rnds[0]);
     const max: number = Math.ceil(this.rnds[n - 1]);
@@ -35,7 +35,7 @@ export class GeneradorExponencial extends GeneradorDistribucion {
     for (let i: number = 0; i < cantIntervalos; i++) {
       let limSuperior: number = limInferior + anchoIntervalo;
       let marcaClase: number = (limInferior + limSuperior) / 2;
-      let frecObservada = contarEnRango(this.rnds, limInferior, limSuperior);
+      let frecObservada = Utils.contarEnRango(this.rnds, limInferior, limSuperior);
       let probObservada: number = frecObservada / n;
       let probEsperada: number = 1 - Math.exp(-lambda * limSuperior) - (1 - Math.exp(-lambda * limInferior));
       let frecEsperada: number = probEsperada * n;

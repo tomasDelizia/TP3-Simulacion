@@ -1,5 +1,5 @@
 import { GeneradorDistribucion } from './GeneradorDistribucion';
-import { contarSi, factorial, quickSort } from './utils';
+import { Utils } from "./Utils";
 
 export class GeneradorPoisson extends GeneradorDistribucion {
   public async generarDistribucionPoisson(
@@ -22,17 +22,17 @@ export class GeneradorPoisson extends GeneradorDistribucion {
       this.rnds.push(rnd);
     }
 
-    quickSort(this.rnds);
+    Utils.quickSort(this.rnds);
     console.log(this.rnds);
 
     const min: number = this.rnds[0];
     const max: number = this.rnds[n - 1];
     for (let i: number = min; i <= max; i++) {
       let valor: number = i;
-      let frecObservada = contarSi(this.rnds, valor);
+      let frecObservada = Utils.contarSi(this.rnds, valor);
       let probObservada: number = frecObservada / n;
       let probEsperada: number =
-        (Math.pow(lambda, valor) * Math.exp(-lambda)) / factorial(valor);
+        (Math.pow(lambda, valor) * Math.exp(-lambda)) / Utils.factorial(valor);
       let frecEsperada: number = Math.round(probEsperada * n);
       this.tabla.push([
         valor,
@@ -54,15 +54,4 @@ export class GeneradorPoisson extends GeneradorDistribucion {
     }
     return valores;
   }
-
-  /*public getFrecuenciasObservadas(): number[] {
-    let frecObservadas: number[] = [];
-    if (this.tabla != null) {
-      for (let i: number = 0; i < this.tabla.length; i++) {
-        let frecObservada: number = this.tabla[i][2];
-        frecObservadas.push(frecObservada);
-      }
-    }
-    return frecObservadas;
-  }*/
 }

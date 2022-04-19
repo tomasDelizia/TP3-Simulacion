@@ -67,6 +67,7 @@
 
       <hr>
 
+      <!-- Distribución Uniforme -->
       <div id="distUniforme">
         <div class="row mb-3 mx-3">
           <h3>Distribución Uniforme</h3>
@@ -174,6 +175,7 @@
 
       </div>
 
+      <!-- Distribución Normal -->
       <div id="distNormal">
         <div class="row mb-3 mx-3">
           <h6>Distribución Normal</h6>
@@ -194,8 +196,23 @@
           </div>
         </div>
 
+        <div class="col">
+          <label class="form-label" for="cboMetodoDistNormal"
+            >Seleccione la cantidad de intervalos (K):</label
+          >
+          <select class="form-select mb-3" id="cboMetodoDistNormal">
+            <option value="0" selected>Seleccione un valor...</option>
+            <option value="box-muller">Box-Muller</option>
+            <option value="convolucion">Convolución</option>
+          </select>
+        </div>
+
         <div class="row mb-3 mx-3">
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistNormal" type="button" name="btnDistNormal">Generar Distribución</button>
+        </div>
+
+        <div class="row mb-3 mx-3">
+          <button class="btn btn-dark form-control form-control-sm" id="btnDescargarNormal" type="button" name="btnDescargarNormal">Descargar Serie</button>
         </div>
 
         <div>
@@ -216,10 +233,68 @@
           </table>
         </div>
 
+
+        <div class="chart-container row mb-3 mx-3">
+          <canvas id="histogramaDistNormal" ></canvas>
+        </div>
+
+        <h3 class="text-center">Prueba Chi-Cuadrado</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaChiDistNormal" class="table mx-3 mb-3">
+            <thead>
+                <tr>
+                    <th>LI</th>
+                    <th>LS</th>
+                    <th>F<sub>o</sub></th>
+                    <th>F<sub>e</sub></th>
+                    <th>C</th>
+                    <th>Σ C</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResChiNormal">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResChiNormal" name="txtResChiNormal" id="" cols="30" rows="5"></textarea>
+        </div>
+
+        <h3 class="text-center">Prueba Kolmogorov-Smirnov</h3>
+
+        <div class="row mb-3 mx-3">
+          <table id="tablaKSDistNormal" class="table mx-3 mb-3">
+            <thead>
+              <tr>
+                <th>LI</th>
+                <th>LS</th>
+                <th>MC</th>
+                <th>P<sub>o</sub></th>
+                <th>F<sub>o</sub></th>
+                <th>P<sub>e</sub></th>
+                <th>F<sub>e</sub></th>
+                <th>Σ P<sub>o</sub></th>
+                <th>Σ P<sub>e</sub></th>
+                <th>|Σ P<sub>o</sub> - Σ P<sub>e</sub>|</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mb-3 mx-3 row">
+          <label for="txtResKSNormal">Resultado:</label>
+          <textarea class='form-control-plaintext'disabled id="txtResKSNormal" name="txtResKSNormal" id="" cols="30" rows="5"></textarea>
+        </div>  
+
         <hr>
 
       </div>
 
+      <!-- Distribución Exponencial -->
       <div id="distExponencial">
         <div class="row mb-3 mx-3">
           <h6>Distribución Exponencial</h6>
@@ -318,6 +393,7 @@
 
       </div>
 
+      <!-- Distribución Poisson -->
       <div id="distPoisson">
         <div class="row mb-3 mx-3">
           <h6>Distribución Poisson</h6>

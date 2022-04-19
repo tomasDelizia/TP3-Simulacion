@@ -1,7 +1,7 @@
 import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
-import { contarEnRango, quickSort } from "./utils";
+import { Utils } from "./Utils";
 
 export class GeneradorUniforme extends GeneradorDistribucion {
 
@@ -25,7 +25,7 @@ export class GeneradorUniforme extends GeneradorDistribucion {
       this.rnds.push(rnd);
     }
 
-    quickSort(this.rnds);
+    Utils.quickSort(this.rnds);
 
     let limInferior: number = a;
     const anchoIntervalo: number = (b - a) / cantIntervalos;
@@ -35,7 +35,7 @@ export class GeneradorUniforme extends GeneradorDistribucion {
     for (let i: number = 0; i < cantIntervalos; i++) {
       let limSuperior: number = limInferior + anchoIntervalo;
       let marcaClase: number = (limInferior + limSuperior) / 2;
-      let frecObservada: number = contarEnRango(this.rnds, limInferior, limSuperior);
+      let frecObservada: number = Utils.contarEnRango(this.rnds, limInferior, limSuperior);
       let probObservada: number = frecObservada / n;
       this.tabla.push([
         limInferior,
