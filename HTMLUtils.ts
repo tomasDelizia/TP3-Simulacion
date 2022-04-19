@@ -3,11 +3,12 @@ import { GeneradorDistribucion } from "./GeneradorDistribucion";
 
 export module HTMLUtils {
 
-  // Ocultamos las secciones hasta que no se seleccione la distribución.
+  // Función para ocultar un elemento div.
   export function ocultarSeccion(div: HTMLDivElement): void {
     div.style.display = 'none';
   }
 
+  // Función para mostrar un elemento div.
   export function mostrarSeccion(div: HTMLDivElement): void {
     div.style.display = 'block';
   }
@@ -21,26 +22,24 @@ export module HTMLUtils {
 
   // Agregar una fila a una tabla html a partir de un vector pasado por parámetro.
   export function agregarFilaATabla(fila: any[], tabla: HTMLTableElement) {
-  let filaHTML: HTMLTableRowElement = tabla
-    .getElementsByTagName('tbody')[0]
-    .insertRow();
+  let filaHTML: HTMLTableRowElement = tabla.getElementsByTagName('tbody')[0].insertRow();
   for (let i: number = 0; i < fila.length; i++) {
-    let celda = filaHTML.insertCell();
+    let celda: HTMLTableDataCellElement = filaHTML.insertCell();
     celda.appendChild(document.createTextNode(String(fila[i])));
     }
   }
 
-  export function generarGrafico(generador: GeneradorDistribucion, histograma: HTMLCanvasElement): Chart {
-    // limpiarGrafico();
+  // Función que genera un histograma de frecuencias.
+  export function generarGrafico(histograma: HTMLCanvasElement, labels: any[], data: any[]): Chart {
     const area: CanvasRenderingContext2D = histograma.getContext('2d');
     return new Chart(area,  {
       type: 'bar',
       data: {
-        labels: generador.getIntervalos(),
+        labels: labels,
         datasets: [
           {
             label: 'Frecuencias observadas',
-            data: generador.getFrecuenciasObservadas(),
+            data: data,
             backgroundColor: '#F8C471',
           },
         ],

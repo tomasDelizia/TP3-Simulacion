@@ -1,6 +1,7 @@
 import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { PruebaBondad } from "./PruebaBondad";
 
+// Clase para realizar la prueba Kolmogorov-Smirnov.
 export class PruebaKS extends PruebaBondad {
   // Tabla KS con p = 0.95, para grados de libertad entre 1 y 40.
   private tablaKS: number[] = [
@@ -30,6 +31,7 @@ export class PruebaKS extends PruebaBondad {
     for (let i: number = 0; i < tablaDistribucion.length; i++) {
       probObsAc += tablaDistribucion[i][3];
       probEspAc += tablaDistribucion[i][5];
+      // Obtenemos el valor absoluto de la diferencia entre la probabilidad observada acumulada y la esperada acumulada.
       let diferencia: number = Math.abs(probObsAc - probEspAc);
       this.tablaPrueba.push([
         tablaDistribucion[i][0],
@@ -43,6 +45,8 @@ export class PruebaKS extends PruebaBondad {
         Number(probEspAc.toFixed(4)),
         Number(diferencia.toFixed(4))
       ]);
+
+      // Actualizamos el valor del estadístico calculado en cada iteración, preguntando por el máximo entre el anterior y la diferencia de la iteración actual.
       this.estadisticoPrueba = Math.max(this.estadisticoPrueba, diferencia);
     }
   }

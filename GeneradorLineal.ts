@@ -1,8 +1,10 @@
 import {GeneradorNumeros} from "./GeneradorNumeros";
 
+// Clase que genera números pseudoaleatorios con distribución uniforme (0, 1) utilizando el generador congruencial lineal.
 export class GeneradorLineal implements GeneradorNumeros {
     // La secuencia de números enteros usados para generar la secuencia pseudoaleatoria.
     private enteros: number[];
+
     // La secuencia de números pseudoaleatorios a generar.
     private rnds: number[];
 
@@ -12,7 +14,7 @@ export class GeneradorLineal implements GeneradorNumeros {
       this.enteros = [];
       this.rnds = [];
 
-      // Obtenemos los parámetros.
+      // Obtenemos los parámetros del usuario.
       let semilla: number = parseInt(prompt('Ingrese el valor de la semilla:', '0'), 10);
       while (semilla <= 0) {
         alert('Debe ingresar únicamente valores positivos');

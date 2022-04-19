@@ -3,7 +3,7 @@ import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
 import { Utils } from "./Utils";
 
-// Clase abstracta que genera variables aleatorias con distribución exponencial negativa.
+// Clase que genera variables aleatorias con distribución exponencial negativa.
 export class GeneradorExponencial extends GeneradorDistribucion {
 
   public async generarDistribucionExponencial(n: number, metodo: string, cantIntervalos: number, lambda: number): Promise<any> {

@@ -194,7 +194,7 @@ btnDistUniforme.addEventListener('click', async () => {
       HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistUniforme);
     }
     btnDescargarUniforme.disabled = false;
-    graficoDistUniforme = HTMLUtils.generarGrafico(generadorDistribucion, histogramaDistUniforme);
+    graficoDistUniforme = HTMLUtils.generarGrafico(histogramaDistUniforme, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);
@@ -229,7 +229,7 @@ btnDistNormal.addEventListener('click', async () => {
       HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistNormal);
     }
     btnDescargarNormal.disabled = false;
-    graficoDistNormal = HTMLUtils.generarGrafico(generadorDistribucion, histogramaDistNormal);
+    graficoDistNormal = HTMLUtils.generarGrafico(histogramaDistNormal, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);
@@ -264,7 +264,7 @@ btnDistExponencial.addEventListener('click', async () => {
       HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistExponencial);
     }
     btnDescargarExponencial.disabled = false;
-    graficoDistExponencial = HTMLUtils.generarGrafico(generadorDistribucion, histogramaDistExponencial);
+    graficoDistExponencial = HTMLUtils.generarGrafico(histogramaDistExponencial, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);
@@ -304,7 +304,7 @@ btnDistPoisson.addEventListener('click', async () => {
       // let filaNueva: number[] = [fila[0],fila[3],fila[4],fila[5],fila[6]];
     }
     btnDescargarPoisson.disabled = false;
-    graficoDistPoisson = HTMLUtils.generarGrafico(generadorDistribucion, histogramaDistPoisson);
+    graficoDistPoisson = HTMLUtils.generarGrafico(histogramaDistPoisson, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);

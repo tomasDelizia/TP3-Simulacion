@@ -1,6 +1,7 @@
 import { GeneradorDistribucion } from './GeneradorDistribucion';
 import { Utils } from "./Utils";
 
+// Clase que genera variables aleatorias con distribución Poisson.
 export class GeneradorPoisson extends GeneradorDistribucion {
   public async generarDistribucionPoisson(n: number, lambda: number): Promise<any> {
     this.n = n;

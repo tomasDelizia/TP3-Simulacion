@@ -1,6 +1,7 @@
 import { GeneradorDistribucion } from "./GeneradorDistribucion";
 import { PruebaBondad } from "./PruebaBondad";
 
+// Clase para realizar la prueba Chi-Cuadrado.
 export class PruebaChiCuadrado extends PruebaBondad {
   // Tabla de distribución Chi Cuadrado con p = 0.95, para grados de libertad entre 1 y 30.
   private tablaChiCuadrado: number[] = [
@@ -9,7 +10,10 @@ export class PruebaChiCuadrado extends PruebaBondad {
     32.671, 33.924, 35.172, 36.415, 37.652, 38.885, 40.113, 41.337, 42.557, 43.773,
   ];
 
+  // El valor de la cantidad de intervalos de la tabla Chi-Cuadrado.
   private k: number;
+
+  // El valor de parámetros calculados para la prueba.
   private m: number;
 
   public async probar(generador: GeneradorDistribucion): Promise<any> {
@@ -21,13 +25,18 @@ export class PruebaChiCuadrado extends PruebaBondad {
     let sumaFrecEsp: number = 0;
     let desde: number = tablaDistribucion[0][0];
     this.estadisticoPrueba = 0;
+
+    // Iteramos mientras haya filas en la tabla de distribución.
     for (let i: number = 0; i < tablaDistribucion.length; i++) {
+      // Obtenemos los valores de las frecuencias observada y esperada y los sumamos a las variables de suma.
       let frecObservada: number = tablaDistribucion[i][4];
       let frecEsperada: number = tablaDistribucion[i][6];
       sumaFrecEsp += frecEsperada;
       sumaFrecObs += frecObservada;
+
+      // Si la frecuencia esperada acumulada es menor a 5.
       if (sumaFrecEsp < 5) {
-        // Si estamos en la última iteración, debemos agrupar con el intervalo anterior.
+        // Si estamos en la última iteración, debemos agrupar con el último intervalo de la tabla Chi-Cuadrado.
         if (i === tablaDistribucion.length - 1) {
           desde = this.tablaPrueba[this.tablaPrueba.length - 1][0];
           let hasta: number = tablaDistribucion[i][1];
@@ -45,6 +54,8 @@ export class PruebaChiCuadrado extends PruebaBondad {
           ];
         }
       }
+
+      // Si la frecuencia esperada acumulada es igual o mayor a 5, generamos un nuevo intervalo en la tabla Chi-Cuadrado.
       else {
         let estadistico: number = (Math.pow((sumaFrecObs - sumaFrecEsp), 2)) / sumaFrecEsp;
         this.estadisticoPrueba += estadistico;
@@ -63,7 +74,7 @@ export class PruebaChiCuadrado extends PruebaBondad {
       }
     }
 
-    // Obtenemos el valor del estadístico de tabulado y los grados de libertad.
+    // Obtenemos el valor del estadístico tabulado y los grados de libertad.
     this.k = this.tablaPrueba.length;
     this.m = -1;
     if (generador.constructor.name === 'GeneradorPoisson')
@@ -76,12 +87,15 @@ export class PruebaChiCuadrado extends PruebaBondad {
   }
 
   public validarHipotesis(): string {
+    // Si los grados de libertad no están tabulados, no se puede hacer la prueba.
     if (this.v <= 0 || this.v > 30) {
       return 'No se puede realizar la prueba Chi-Cuadrado.';
     }
     // Si el estadistico calculado es mayor al tabulado, se rechaza la hipótesis nula.
     if (this.estadisticoPrueba > this.estadisticoTabulado)
     return 'Ya que el estadístico calculado es mayor al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' > ' + this.estadisticoTabulado + '), se procede a rechazar la hipótesis nula.';
+
+    // De lo contrario, no se puede rechazar la hipótesis nula.
     else
       return 'Ya que el estadístico calculado es menor o igual al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' <= ' + this.estadisticoTabulado + '), no se puede rechazar la hipótesis nula.';
   }

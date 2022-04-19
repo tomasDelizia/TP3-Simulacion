@@ -3,6 +3,7 @@ import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
 import { Utils } from "./Utils";
 
+// Clase que genera variables aleatorias con distribución normal.
 export class GeneradorNormal extends GeneradorDistribucion {
 
   public async generarDistribucionNormal(n: number, metodo: string, cantIntervalos: number, media: number, desviacion: number, metodoNormal: string): Promise<any> {
@@ -24,16 +25,25 @@ export class GeneradorNormal extends GeneradorDistribucion {
     switch (metodoNormal) {
       // Generamos las variables aleatorias normales por el método de Box-Muller.
       case 'box-muller':
+        // Si la cantidad de variables a generar es par, generamos esa cantidad de variables uniformes (0, 1).
         if (n % 2 === 0)
           this.generador.generarNumerosPseudoaleatorios(n);
+
+        // Si no, agregamos uno a la cantidad de variables uniformes (0, 1) a generar.
         else
           this.generador.generarNumerosPseudoaleatorios(n + 1);
+
         for (let i: number = 0; i < n; i += 2) {
+          // Obtenemos dos variables uniformes (0, 1).
           let rnd1: number = this.generador.getRnds()[i];
           let rnd2: number = this.generador.getRnds()[i + 1];
+
+          // Obtenemos las variables normales correspondientes a cada uno.
           let n1: number = (Math.sqrt(-2 * Math.log(rnd1)) * Math.cos(2 * Math.PI * rnd2)) * desviacion + media;
           let n2: number = (Math.sqrt(-2 * Math.log(rnd1)) * Math.sin(2 * Math.PI * rnd2)) * desviacion + media;
+          
           this.rnds.push(n1);
+          // Si aún no se agregaron n variables normales al vector, se inserta N2.
           if (this.rnds.length < n)
             this.rnds.push(n2);
         }
@@ -41,12 +51,16 @@ export class GeneradorNormal extends GeneradorDistribucion {
 
       // Generamos las variables aleatorias normales por el método de Convolución.   
       case 'convolucion':
+        // Generamos 12 variables uniformes (0, 1) por cada variable normal a generar.
         this.generador.generarNumerosPseudoaleatorios(12 * n);
         for (let i: number = 1; i <= n; i++) {
+          // Iniciamos una variable de suma en 0 en cada iteración.
           let suma: number = 0;
+          // Sumamos de a 12 elementos por vez.
           for (let j: number = 12 * (i - 1); j < 12 * i; j++) {
             suma += this.generador.getRnds()[j];
           }
+          // Generamos e insertamos la variable normal.
           let rnd: number = (suma - 6) * desviacion + media;
           this.rnds.push(rnd);
         }

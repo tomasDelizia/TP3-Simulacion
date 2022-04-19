@@ -1,5 +1,6 @@
 import {GeneradorNumeros} from "./GeneradorNumeros";
 
+// Clase que genera números pseudoaleatorios con distribución uniforme (0, 1) utilizando el generador de JavaScript.
 export class GeneradorLenguaje implements GeneradorNumeros {
     // La secuencia de números pseudoaleatorios a generar.
     private rnds: number[];
