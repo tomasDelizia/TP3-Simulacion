@@ -61,7 +61,7 @@ export class GeneradorNormal extends GeneradorDistribucion {
       let frecObservada = Utils.contarEnRango(this.rnds, limInferior, limSuperior);
       let probObservada: number = frecObservada / n;
       let probEsperada: number = 
-        Math.exp(-1/2 * ((marcaClase - media) / desviacion)^2) / (desviacion * Math.sqrt(2 * Math.PI)) * (limSuperior - limInferior);
+        (Math.exp(-1/2 * Math.pow(((marcaClase - media) / desviacion),2)) / (desviacion * Math.sqrt(2 * Math.PI))) * (limSuperior - limInferior);
       let frecEsperada: number = probEsperada * n;
       this.tabla.push([
         limInferior,

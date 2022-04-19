@@ -169,6 +169,10 @@ cboDistribucion.addEventListener('input', () => {
 btnDistUniforme.addEventListener('click', async () => {
   if (validarParametrosUniforme()) {
     HTMLUtils.limpiarTabla(tablaDistUniforme);
+    HTMLUtils.limpiarTabla(tablaChiDistUniforme);
+    HTMLUtils.limpiarTabla(tablaKSDistUniforme);
+    txtResChiUniforme.value = '';
+    txtResKSUniforme.value = '';
     await generadorDistribucion.generarDistribucionUniforme(
       n,
       metodo,
@@ -202,6 +206,10 @@ btnDistUniforme.addEventListener('click', async () => {
 btnDistNormal.addEventListener('click', async () => {
   if (validarParametrosNormal()) {
     HTMLUtils.limpiarTabla(tablaDistNormal);
+    HTMLUtils.limpiarTabla(tablaChiDistNormal);
+    HTMLUtils.limpiarTabla(tablaKSDistNormal);
+    txtResChiNormal.value = '';
+    txtResKSNormal.value = '';
     await generadorDistribucion.generarDistribucionNormal(
       n,
       metodo,
@@ -242,6 +250,10 @@ btnDistNormal.addEventListener('click', async () => {
 btnDistExponencial.addEventListener('click', async () => {
   if (validarParametrosExponencial()) {
     HTMLUtils.limpiarTabla(tablaDistExponencial);
+    HTMLUtils.limpiarTabla(tablaChiDistExponencial);
+    HTMLUtils.limpiarTabla(tablaKSDistExponencial);
+    txtResChiExponencial.value = '';
+    txtResKSExponencial.value = '';
     await generadorDistribucion.generarDistribucionExponencial(
       n,
       metodo,
@@ -280,6 +292,8 @@ btnDistExponencial.addEventListener('click', async () => {
 btnDistPoisson.addEventListener('click', async () => {
   if (validarParametrosPoisson()) {
     HTMLUtils.limpiarTabla(tablaDistPoisson);
+    HTMLUtils.limpiarTabla(tablaChiDistPoisson);
+    txtResChiPoisson.value = '';
     await generadorDistribucion.generarDistribucionPoisson(n, lambda);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
       var fila = generadorDistribucion.getTabla()[i];
