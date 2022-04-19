@@ -39,9 +39,9 @@ export class PruebaKS extends PruebaBondad {
         tablaDistribucion[i][4],
         tablaDistribucion[i][5],
         tablaDistribucion[i][6],
-        probObsAc,
-        probEspAc,
-        diferencia
+        Number(probObsAc.toFixed(4)),
+        Number(probEspAc.toFixed(4)),
+        Number(diferencia.toFixed(4))
       ]);
       this.estadisticoPrueba = Math.max(this.estadisticoPrueba, diferencia);
     }

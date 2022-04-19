@@ -36,12 +36,12 @@ export class PruebaChiCuadrado extends PruebaBondad {
           let estadistico: number = (Math.pow((sumaFrecObs - sumaFrecEsp), 2)) / sumaFrecEsp;
           this.estadisticoPrueba += estadistico;
           this.tablaPrueba[this.tablaPrueba.length - 1] = [
-            desde,
-            hasta,
-            sumaFrecObs,
-            sumaFrecEsp,
-            estadistico,
-            this.estadisticoPrueba
+            Number(desde.toFixed(4)),
+            Number(hasta.toFixed(4)),
+            Number(sumaFrecObs.toFixed(4)),
+            Number(sumaFrecEsp.toFixed(4)),
+            Number(estadistico.toFixed(4)),
+            Number(this.estadisticoPrueba.toFixed(4))
           ];
         }
       }
@@ -50,12 +50,12 @@ export class PruebaChiCuadrado extends PruebaBondad {
         this.estadisticoPrueba += estadistico;
         let hasta: number = tablaDistribucion[i][1];
         this.tablaPrueba.push([
-          desde,
-          hasta,
-          sumaFrecObs,
-          sumaFrecEsp,
-          estadistico,
-          this.estadisticoPrueba
+          Number(desde.toFixed(4)),
+          Number(hasta.toFixed(4)),
+          Number(sumaFrecObs.toFixed(4)),
+          Number(sumaFrecEsp.toFixed(4)),
+          Number(estadistico.toFixed(4)),
+          Number(this.estadisticoPrueba.toFixed(4))
         ]);
         sumaFrecObs = 0;
         sumaFrecEsp = 0;

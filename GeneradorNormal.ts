@@ -64,13 +64,13 @@ export class GeneradorNormal extends GeneradorDistribucion {
         (Math.exp(-1/2 * Math.pow(((marcaClase - media) / desviacion),2)) / (desviacion * Math.sqrt(2 * Math.PI))) * (limSuperior - limInferior);
       let frecEsperada: number = probEsperada * n;
       this.tabla.push([
-        limInferior,
-        limSuperior,
-        marcaClase,
-        probObservada,
-        frecObservada,
-        probEsperada,
-        frecEsperada
+        Number(limInferior.toFixed(4)),
+        Number(limSuperior.toFixed(4)),
+        Number(marcaClase.toFixed(4)),
+        Number(probObservada.toFixed(4)),
+        Number(frecObservada.toFixed(4)),
+        Number(probEsperada.toFixed(4)),
+        Number(frecEsperada.toFixed(4))
       ]);
       limInferior = limSuperior;
     }

@@ -38,10 +38,10 @@ export class GeneradorPoisson extends GeneradorDistribucion {
         valor,
         valor,
         valor,
-        probObservada,
-        frecObservada,
-        probEsperada,
-        frecEsperada,
+        Number(probObservada.toFixed(4)),
+        Number(frecObservada.toFixed(4)),
+        Number(probEsperada.toFixed(4)),
+        Number(frecEsperada.toFixed(4))
       ]);
     }
   }

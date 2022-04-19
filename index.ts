@@ -171,6 +171,7 @@ btnDistUniforme.addEventListener('click', async () => {
     HTMLUtils.limpiarTabla(tablaDistUniforme);
     HTMLUtils.limpiarTabla(tablaChiDistUniforme);
     HTMLUtils.limpiarTabla(tablaKSDistUniforme);
+    limpiarGraficos()
     txtResChiUniforme.value = '';
     txtResKSUniforme.value = '';
     await generadorDistribucion.generarDistribucionUniforme(
@@ -208,6 +209,7 @@ btnDistNormal.addEventListener('click', async () => {
     HTMLUtils.limpiarTabla(tablaDistNormal);
     HTMLUtils.limpiarTabla(tablaChiDistNormal);
     HTMLUtils.limpiarTabla(tablaKSDistNormal);
+    limpiarGraficos()
     txtResChiNormal.value = '';
     txtResKSNormal.value = '';
     await generadorDistribucion.generarDistribucionNormal(
@@ -219,9 +221,7 @@ btnDistNormal.addEventListener('click', async () => {
       metodoNormal
     );
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(
-        generadorDistribucion.getTabla()[i],
-        tablaDistNormal
+      HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistNormal
       );
     }
     btnDescargarNormal.disabled = false;
@@ -252,6 +252,7 @@ btnDistExponencial.addEventListener('click', async () => {
     HTMLUtils.limpiarTabla(tablaDistExponencial);
     HTMLUtils.limpiarTabla(tablaChiDistExponencial);
     HTMLUtils.limpiarTabla(tablaKSDistExponencial);
+    limpiarGraficos()
     txtResChiExponencial.value = '';
     txtResKSExponencial.value = '';
     await generadorDistribucion.generarDistribucionExponencial(
@@ -293,6 +294,7 @@ btnDistPoisson.addEventListener('click', async () => {
   if (validarParametrosPoisson()) {
     HTMLUtils.limpiarTabla(tablaDistPoisson);
     HTMLUtils.limpiarTabla(tablaChiDistPoisson);
+    limpiarGraficos()
     txtResChiPoisson.value = '';
     await generadorDistribucion.generarDistribucionPoisson(n, lambda);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
@@ -447,6 +449,7 @@ function limpiarParametros(): void {
 
 function limpiarGraficos(): void {
   if (graficoDistUniforme != null) graficoDistUniforme.destroy();
+  if (graficoDistNormal != null) graficoDistNormal.destroy();
   if (graficoDistExponencial != null) graficoDistExponencial.destroy();
   if (graficoDistPoisson != null) graficoDistPoisson.destroy();
 }

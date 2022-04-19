@@ -40,13 +40,13 @@ export class GeneradorExponencial extends GeneradorDistribucion {
       let probEsperada: number = 1 - Math.exp(-lambda * limSuperior) - (1 - Math.exp(-lambda * limInferior));
       let frecEsperada: number = probEsperada * n;
       this.tabla.push([
-        limInferior,
-        limSuperior,
-        marcaClase,
-        probObservada,
-        frecObservada,
-        probEsperada,
-        frecEsperada
+        Number(limInferior.toFixed(4)),
+        Number(limSuperior.toFixed(4)),
+        Number( marcaClase.toFixed(4)),
+        Number(probObservada.toFixed(4)),
+        Number(frecObservada.toFixed(4)),
+        Number(probEsperada.toFixed(4)),
+        Number(frecEsperada.toFixed(4))
       ]);
       limInferior = limSuperior;
     }
