@@ -194,18 +194,19 @@
             class="form-control form-control-sm"
             id="txtDesviacionEstandar">
           </div>
+        <div class="row mb-3 mx-3">
+          <div class="col-sm-8">
+            <label class="form-label mb-3" for="cboMetodoDistNormal"
+              >Seleccione el método de distribución normal correspondiente:</label
+            >
+            <select class="form-select " id="cboMetodoDistNormal">
+              <option value="0" selected>Seleccione un valor...</option>
+              <option value="box-muller">Box-Muller</option>
+              <option value="convolucion">Convolución</option>
+            </select>
+          </div>
         </div>
-
-        <div class="col">
-          <label class="form-label" for="cboMetodoDistNormal"
-            >Seleccione la cantidad de intervalos (K):</label
-          >
-          <select class="form-select mb-3" id="cboMetodoDistNormal">
-            <option value="0" selected>Seleccione un valor...</option>
-            <option value="box-muller">Box-Muller</option>
-            <option value="convolucion">Convolución</option>
-          </select>
-        </div>
+      </div>
 
         <div class="row mb-3 mx-3">
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistNormal" type="button" name="btnDistNormal">Generar Distribución</button>
