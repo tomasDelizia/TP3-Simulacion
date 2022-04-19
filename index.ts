@@ -142,6 +142,7 @@ cboDistribucion.addEventListener('input', () => {
       HTMLUtils.ocultarSeccion(divDistExponencial);
       HTMLUtils.ocultarSeccion(divDistPoisson);
       cboMetodoGeneracion.disabled = false;
+      btnDescargarNormal.disabled = true;
       break;
     case '3':
       generadorDistribucion = new GeneradorExponencial();
@@ -339,6 +340,7 @@ function validarParametrosNormal(): boolean {
     alert('Ingrese el método de generación de números aletorios');
     return false;
   }
+
   if (cboMetodoDistNormal.value == '0') {
     alert('Ingrese el método de generación de distribución normal');
     return false;
@@ -356,6 +358,10 @@ function validarParametrosNormal(): boolean {
   if (n <= 0) {
     alert('La cantidad de números a generar debe ser mayor a cero.');
     return false;
+  }
+  if (desviacion < 0){
+    alert('La desviación estándar no puede tener un valor negativo.')
+    return false
   }
   return true;
 }
@@ -381,6 +387,10 @@ function validarParametrosExponencial(): boolean {
     alert('La cantidad de números a generar debe ser mayor a cero.');
     return false;
   }
+  if (lambda < 0){
+    alert('Lambda no puede tener un valor negativo.')
+    return false;
+  }
   return true;
 }
 
@@ -398,6 +408,10 @@ function validarParametrosPoisson(): boolean {
   cantIntervalos = Number(cboCantIntervalos.value);
   if (n <= 0) {
     alert('La cantidad de números a generar debe ser mayor a cero.');
+    return false;
+  }
+  if (lambda < 0){
+    alert('Lambda no puede tener un valor negativo');
     return false;
   }
   return true;

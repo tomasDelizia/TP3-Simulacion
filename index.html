@@ -70,7 +70,7 @@
       <!-- Distribución Uniforme -->
       <div id="distUniforme">
         <div class="row mb-3 mx-3">
-          <h3>Distribución Uniforme</h3>
+          <h6>Distribución Uniforme</h6>
 
           <div class="col">
             <label for="txtA"> A: </label>
@@ -179,7 +179,7 @@
       <div id="distNormal">
         <div class="row mb-3 mx-3">
           <h6>Distribución Normal</h6>
-          <div class="col">
+          <div class="col-sm-8">
             <label for="txtMedia">Media: </label>
             <input type="number"
             placeholder="Ingrese un valor..."
@@ -187,16 +187,16 @@
             id="txtMedia">
           </div>
 
-          <div class="col">
+          <div class="col-sm-8">
             <label for="txtDesviacionEstandar"> Desviación Estandar:</label>
             <input type="number"
             placeholder="Ingrese un valor..."
             class="form-control form-control-sm"
             id="txtDesviacionEstandar">
           </div>
-        <div class="row mb-3 mx-3">
+        
           <div class="col-sm-8">
-            <label class="form-label mb-3" for="cboMetodoDistNormal"
+            <label class="form-label" for="cboMetodoDistNormal"
               >Seleccione el método de distribución normal correspondiente:</label
             >
             <select class="form-select " id="cboMetodoDistNormal">
@@ -206,7 +206,6 @@
             </select>
           </div>
         </div>
-      </div>
 
         <div class="row mb-3 mx-3">
           <button class="btn btn-dark mb-2 mx-2 form-control form-control-sm" id="btnDistNormal" type="button" name="btnDistNormal">Generar Distribución</button>
