@@ -77,7 +77,7 @@ export class PruebaChiCuadrado extends PruebaBondad {
 
   public validarHipotesis(): string {
     if (this.v <= 0 || this.v > 30) {
-      return 'No se puede realizar la prueba Chi-Cuadrado,';
+      return 'No se puede realizar la prueba Chi-Cuadrado.';
     }
     // Si el estadistico calculado es mayor al tabulado, se rechaza la hipótesis nula.
     if (this.estadisticoPrueba > this.estadisticoTabulado)

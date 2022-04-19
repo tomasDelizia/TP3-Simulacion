@@ -26,23 +26,24 @@
         </div>
 
         <div class="col">
-          <label class="form-label" for="cboCantIntervalos"
-            >Seleccione la cantidad de intervalos (K):</label
-          >
-          <select class="form-select mb-3" id="cboCantIntervalos">
-            <option value="0" selected>Seleccione un valor...</option>
-            <option value="8">8</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
+          <label class="form-label" for="cboDistribucion"
+            >Distribución:
+          </label>
+          <select class="form-select mb-3" id="cboDistribucion">
+            <option value="0" selected>Seleccione una distribución...</option>
+            <option value="uniforme">Distribución Uniforme</option>
+            <option value="normal">Distribución Normal</option>
+            <option value="exponencial">Distribución Exponencial</option>
+            <option value="poisson">Distribución Poisson</option>
           </select>
         </div>
+
       </div>
 
       <div class="row mb-3 mx-3">
         <div class="col">
           <label class="form-label" for="cboMetodoGeneracion"
-            >Seleccione el método de generación:</label
+            >Método de generación de RNDs U(0, 1):</label
           >
           <select class="form-select mb-3" id="cboMetodoGeneracion">
             <option value="0" selected>Seleccione un método...</option>
@@ -52,17 +53,18 @@
         </div>
 
         <div class="col">
-          <label class="form-label" for="cboDistribucion"
-            >Seleccione la distribución correspondiente:
-          </label>
-          <select class="form-select mb-3" id="cboDistribucion">
-            <option value="0" selected>Seleccione una distribución...</option>
-            <option value="1">Distribución Uniforme</option>
-            <option value="2">Distribución Normal</option>
-            <option value="3">Distribución Exponencial</option>
-            <option value="4">Distribución Poisson</option>
+          <label class="form-label" for="cboCantIntervalos"
+            >Cantidad de intervalos (K):</label
+          >
+          <select class="form-select mb-3" id="cboCantIntervalos">
+            <option value="0" selected>Seleccione un valor...</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
           </select>
         </div>
+
       </div>
 
       <hr>
@@ -197,7 +199,7 @@
         
           <div class="col-sm-8">
             <label class="form-label" for="cboMetodoDistNormal"
-              >Seleccione el método de distribución normal correspondiente:</label
+              >Método de generación de variables aleatorias normales:</label
             >
             <select class="form-select " id="cboMetodoDistNormal">
               <option value="0" selected>Seleccione un valor...</option>

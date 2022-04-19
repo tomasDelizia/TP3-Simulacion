@@ -1,4 +1,4 @@
-// Imports
+// Imports.
 import { Chart } from 'chart.js';
 import { GeneradorCSV } from './GeneradorCSV';
 import { GeneradorDistribucion } from './GeneradorDistribucion';
@@ -44,7 +44,7 @@ const divDistNormal: HTMLDivElement = document.getElementById('distNormal') as H
 const divDistExponencial: HTMLDivElement = document.getElementById('distExponencial') as HTMLDivElement;
 const divDistPoisson: HTMLDivElement = document.getElementById('distPoisson') as HTMLDivElement;
 
-// Definición de las tablas de la interfaz de usuario.
+// Definición de las tablas.
 const tablaDistUniforme: HTMLTableElement = document.getElementById('tablaDistUniforme') as HTMLTableElement;
 const tablaDistNormal: HTMLTableElement = document.getElementById('tablaDistNormal') as HTMLTableElement;
 const tablaDistExponencial: HTMLTableElement = document.getElementById('tablaDistExponencial') as HTMLTableElement;
@@ -59,7 +59,7 @@ const tablaKSDistUniforme: HTMLTableElement = document.getElementById('tablaKSDi
 const tablaKSDistNormal: HTMLTableElement = document.getElementById('tablaKSDistNormal') as HTMLTableElement;
 const tablaKSDistExponencial: HTMLTableElement = document.getElementById('tablaKSDistExponencial') as HTMLTableElement;
 
-// Definición de los cuadros con los resultados de las hipótesis.
+// Definición de los cuadros de texto con los resultados de las hipótesis.
 const txtResChiUniforme: HTMLTextAreaElement = document.getElementById('txtResChiUniforme') as HTMLTextAreaElement;
 const txtResChiNormal: HTMLTextAreaElement = document.getElementById('txtResChiNormal') as HTMLTextAreaElement;
 const txtResChiExponencial: HTMLTextAreaElement = document.getElementById('txtResChiExponencial') as HTMLTextAreaElement;
@@ -83,12 +83,12 @@ let media: number;
 let desviacion: number;
 let lambda: number;
 
-// Definición del generador números de una distribución genérica, la prueba Chi-Cuadrado y la prueba KS.
+// Definición del generador de variables aleatorias genérico, la prueba Chi-Cuadrado y la prueba KS.
 let generadorDistribucion: GeneradorDistribucion;
 const pruebaChiCuadrado: PruebaBondad = new PruebaChiCuadrado();
 const pruebaKS: PruebaBondad = new PruebaKS();
 
-// Definición del histograma de frecuencias.
+// Definición de los histogramas de frecuencia.
 const histogramaDistUniforme: HTMLCanvasElement = document.getElementById('histogramaDistUniforme') as HTMLCanvasElement;
 let graficoDistUniforme: Chart;
 
@@ -101,7 +101,7 @@ let graficoDistExponencial: Chart;
 const histogramaDistPoisson: HTMLCanvasElement = document.getElementById('histogramaDistPoisson') as HTMLCanvasElement;
 let graficoDistPoisson: Chart;
 
-// Dispara la generación de un archivo csv
+// Dispara la generación de un archivo CSV.
 btnDescargarUniforme.addEventListener('click', generarArchivo);
 btnDescargarNormal.addEventListener('click', generarArchivo);
 btnDescargarExponencial.addEventListener('click', generarArchivo);
@@ -112,6 +112,7 @@ function generarArchivo(): void {
   generadorCSV.generarArchivo(generadorDistribucion.getRnds(), 'Serie');
 }
 
+// Al principio se ocultan todas las secciones de las distintas distribuciones.
 HTMLUtils.ocultarSeccion(divDistUniforme);
 HTMLUtils.ocultarSeccion(divDistNormal);
 HTMLUtils.ocultarSeccion(divDistExponencial);
@@ -120,46 +121,57 @@ HTMLUtils.ocultarSeccion(divDistPoisson);
 // Mostramos la sección correspondiente a la distribución elegida.
 cboDistribucion.addEventListener('input', () => {
   switch (cboDistribucion.value) {
+    // No se selecciona ninguna.
     case '0':
       HTMLUtils.ocultarSeccion(divDistUniforme);
       HTMLUtils.ocultarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistExponencial);
       HTMLUtils.ocultarSeccion(divDistPoisson);
+      cboCantIntervalos.disabled = false;
       cboMetodoGeneracion.disabled = false;
-    case '1':
+      break;
+    // Se selecciona la distribución uniforme.
+    case 'uniforme':
       generadorDistribucion = new GeneradorUniforme();
       HTMLUtils.mostrarSeccion(divDistUniforme);
       HTMLUtils.ocultarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistExponencial);
       HTMLUtils.ocultarSeccion(divDistPoisson);
+      cboCantIntervalos.disabled = false;
       cboMetodoGeneracion.disabled = false;
       btnDescargarUniforme.disabled = true;
       break;
-    case '2':
+    // Se selecciona la distribución normal.
+    case 'normal':
       generadorDistribucion = new GeneradorNormal();
       HTMLUtils.mostrarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistUniforme);
       HTMLUtils.ocultarSeccion(divDistExponencial);
       HTMLUtils.ocultarSeccion(divDistPoisson);
+      cboCantIntervalos.disabled = false;
       cboMetodoGeneracion.disabled = false;
       btnDescargarNormal.disabled = true;
       break;
-    case '3':
+    // Se selecciona la distribución exponencial.
+    case 'exponencial':
       generadorDistribucion = new GeneradorExponencial();
       HTMLUtils.mostrarSeccion(divDistExponencial);
       HTMLUtils.ocultarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistUniforme);
       HTMLUtils.ocultarSeccion(divDistPoisson);
+      cboCantIntervalos.disabled = false;
       cboMetodoGeneracion.disabled = false;
       btnDescargarExponencial.disabled = true;
       break;
-    case '4':
+    // Se selecciona la distribución Poisson.
+    case 'poisson':
       generadorDistribucion = new GeneradorPoisson();
       HTMLUtils.mostrarSeccion(divDistPoisson);
       HTMLUtils.ocultarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistExponencial);
       HTMLUtils.ocultarSeccion(divDistUniforme);
       cboMetodoGeneracion.disabled = true;
+      cboCantIntervalos.disabled = true;
       btnDescargarPoisson.disabled = true;
       break;
   }
@@ -167,20 +179,17 @@ cboDistribucion.addEventListener('input', () => {
 
 // Dispara la generación de números aleatorios con distribución uniforme (A, B).
 btnDistUniforme.addEventListener('click', async () => {
+  // Validamos los parámetros.
   if (validarParametrosUniforme()) {
     HTMLUtils.limpiarTabla(tablaDistUniforme);
     HTMLUtils.limpiarTabla(tablaChiDistUniforme);
     HTMLUtils.limpiarTabla(tablaKSDistUniforme);
-    limpiarGraficos()
+    limpiarGraficos();
     txtResChiUniforme.value = '';
     txtResKSUniforme.value = '';
-    await generadorDistribucion.generarDistribucionUniforme(
-      n,
-      metodo,
-      cantIntervalos,
-      a,
-      b
-    );
+
+    // Generamos las variables aleatorias con distribución uniforme (A, B).
+    await generadorDistribucion.generarDistribucionUniforme(n, metodo, cantIntervalos, a, b);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistUniforme);
     }
@@ -203,8 +212,9 @@ btnDistUniforme.addEventListener('click', async () => {
   }
 });
 
-// Dispara la generación de números aleatorios con distribución exponencial negativa.
+// Dispara la generación de números aleatorios con distribución normal.
 btnDistNormal.addEventListener('click', async () => {
+  // Validamos los parámetros.
   if (validarParametrosNormal()) {
     HTMLUtils.limpiarTabla(tablaDistNormal);
     HTMLUtils.limpiarTabla(tablaChiDistNormal);
@@ -212,17 +222,11 @@ btnDistNormal.addEventListener('click', async () => {
     limpiarGraficos()
     txtResChiNormal.value = '';
     txtResKSNormal.value = '';
-    await generadorDistribucion.generarDistribucionNormal(
-      n,
-      metodo,
-      cantIntervalos,
-      media,
-      desviacion,
-      metodoNormal
-    );
+
+    // Generamos las variables aleatorias con distribución normal.
+    await generadorDistribucion.generarDistribucionNormal(n, metodo, cantIntervalos, media, desviacion, metodoNormal);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistNormal
-      );
+      HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistNormal);
     }
     btnDescargarNormal.disabled = false;
     graficoDistNormal = HTMLUtils.generarGrafico(generadorDistribucion, histogramaDistNormal);
@@ -230,10 +234,7 @@ btnDistNormal.addEventListener('click', async () => {
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);
     for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(
-        pruebaChiCuadrado.getTabla()[i],
-        tablaChiDistNormal
-      );
+      HTMLUtils.agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistNormal);
     }
     txtResChiNormal.value = pruebaChiCuadrado.validarHipotesis();
 
@@ -248,6 +249,7 @@ btnDistNormal.addEventListener('click', async () => {
 
 // Dispara la generación de números aleatorios con distribución exponencial negativa.
 btnDistExponencial.addEventListener('click', async () => {
+  // Validamos los parámetros.
   if (validarParametrosExponencial()) {
     HTMLUtils.limpiarTabla(tablaDistExponencial);
     HTMLUtils.limpiarTabla(tablaChiDistExponencial);
@@ -255,17 +257,11 @@ btnDistExponencial.addEventListener('click', async () => {
     limpiarGraficos()
     txtResChiExponencial.value = '';
     txtResKSExponencial.value = '';
-    await generadorDistribucion.generarDistribucionExponencial(
-      n,
-      metodo,
-      cantIntervalos,
-      lambda
-    );
+
+    // Generamos las variables aleatorias con distribución exponencial negativa.
+    await generadorDistribucion.generarDistribucionExponencial(n, metodo, cantIntervalos, lambda);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(
-        generadorDistribucion.getTabla()[i],
-        tablaDistExponencial
-      );
+      HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistExponencial);
     }
     btnDescargarExponencial.disabled = false;
     graficoDistExponencial = HTMLUtils.generarGrafico(generadorDistribucion, histogramaDistExponencial);
@@ -273,10 +269,7 @@ btnDistExponencial.addEventListener('click', async () => {
     // Realizamos la prueba Chi-Cuadrado.
     await pruebaChiCuadrado.probar(generadorDistribucion);
     for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(
-        pruebaChiCuadrado.getTabla()[i],
-        tablaChiDistExponencial
-      );
+      HTMLUtils.agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistExponencial);
     }
     txtResChiExponencial.value = pruebaChiCuadrado.validarHipotesis();
 
@@ -291,20 +284,24 @@ btnDistExponencial.addEventListener('click', async () => {
 
 // Dispara la generación de números aleatorios con distribución Poisson.
 btnDistPoisson.addEventListener('click', async () => {
+  // Validamos los parámetros.
   if (validarParametrosPoisson()) {
     HTMLUtils.limpiarTabla(tablaDistPoisson);
     HTMLUtils.limpiarTabla(tablaChiDistPoisson);
     limpiarGraficos()
     txtResChiPoisson.value = '';
+
+    // Generamos las variables aleatorias con distribución Poisson.
     await generadorDistribucion.generarDistribucionPoisson(n, lambda);
     for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      var fila = generadorDistribucion.getTabla()[i];
-      var filaNueva = [];
+      let fila: number[] = generadorDistribucion.getTabla()[i];
+      let filaNueva: number[] = [];
+      // Salteamos las columnas 1 y 2 de la tabla de distribución, ya que tiene la columna "Valor" repetida.
       for (let j: number = 0; j < fila.length; j++) {
         if (j != 1 && j != 2) filaNueva.push(fila[j]);
       }
       HTMLUtils.agregarFilaATabla(filaNueva, tablaDistPoisson);
-      /*var filaNueva = [fila[0],fila[3],fila[4],fila[5],fila[6]]*/
+      // let filaNueva: number[] = [fila[0],fila[3],fila[4],fila[5],fila[6]];
     }
     btnDescargarPoisson.disabled = false;
     graficoDistPoisson = HTMLUtils.generarGrafico(generadorDistribucion, histogramaDistPoisson);
@@ -318,13 +315,14 @@ btnDistPoisson.addEventListener('click', async () => {
   }
 });
 
+// Validamos los parámetros para el caso de que se seleccione la distribución uniforme.
 function validarParametrosUniforme(): boolean {
   if (cboCantIntervalos.value == '0') {
-    alert('Ingrese la cantidad de intervalos');
+    alert('Seleccione la cantidad de intervalos.');
     return false;
   }
   if (cboMetodoGeneracion.value == '0') {
-    alert('Ingrese el método de generación de números aletorios');
+    alert('Seleccione el método de generación de números aleatorios U(0, 1).');
     return false;
   }
   if (txtCantNros.value == '' || txtA.value == '' || txtB.value == '') {
@@ -340,25 +338,25 @@ function validarParametrosUniforme(): boolean {
     alert('La cantidad de números a generar debe ser mayor a cero.');
     return false;
   }
-  if (a > b) {
-    alert('El valor de "b" debe ser mayor a "a".');
+  if (a >= b) {
+    alert('El valor de "B" debe ser mayor a "A".');
     return false;
   }
   return true;
 }
 
+// Validamos los parámetros para el caso de que se seleccione la distribución normal.
 function validarParametrosNormal(): boolean {
   if (cboCantIntervalos.value == '0') {
-    alert('Ingrese la cantidad de intervalos');
+    alert('Seleccione la cantidad de intervalos.');
     return false;
   }
   if (cboMetodoGeneracion.value == '0') {
-    alert('Ingrese el método de generación de números aletorios');
+    alert('Seleccione el método de generación de números aleatorios U(0, 1).');
     return false;
   }
-
   if (cboMetodoDistNormal.value == '0') {
-    alert('Ingrese el método de generación de distribución normal');
+    alert('Seleccione el método de generación de variables aleatorias normales.');
     return false;
   }
   if (txtCantNros.value == '' || txtMedia.value == '' || txtDesviacionEstandar.value == '') {
@@ -376,19 +374,20 @@ function validarParametrosNormal(): boolean {
     return false;
   }
   if (desviacion < 0){
-    alert('La desviación estándar no puede tener un valor negativo.')
+    alert('La desviación estándar no puede ser un valor negativo.');
     return false
   }
   return true;
 }
 
+// Validamos los parámetros para el caso de que se seleccione la distribución exponencial.
 function validarParametrosExponencial(): boolean {
   if (cboCantIntervalos.value == '0') {
-    alert('Ingrese la cantidad de intervalos');
+    alert('Seleccione la cantidad de intervalos.');
     return false;
   }
   if (cboMetodoGeneracion.value == '0') {
-    alert('Ingrese el método de generación de números aletorios');
+    alert('Seleccione el método de generación de números aleatorios U(0, 1).');
     return false;
   }
   if (txtCantNros.value == '' || txtLambdaExponencial.value == '') {
@@ -404,30 +403,26 @@ function validarParametrosExponencial(): boolean {
     return false;
   }
   if (lambda < 0){
-    alert('Lambda no puede tener un valor negativo.')
+    alert('Lambda no puede ser un valor negativo.');
     return false;
   }
   return true;
 }
 
+// Validamos los parámetros para el caso de que se seleccione la distribución Poisson.
 function validarParametrosPoisson(): boolean {
-  if (cboCantIntervalos.value == '0') {
-    alert('Ingrese la cantidad de intervalos');
-    return false;
-  }
   if (txtCantNros.value == '' || txtLambdaPoisson.value == '') {
     alert('Tiene que ingresar todos los parámetros solicitados.');
     return false;
   }
   n = Number(txtCantNros.value);
   lambda = Number(txtLambdaPoisson.value);
-  cantIntervalos = Number(cboCantIntervalos.value);
   if (n <= 0) {
     alert('La cantidad de números a generar debe ser mayor a cero.');
     return false;
   }
   if (lambda < 0){
-    alert('Lambda no puede tener un valor negativo');
+    alert('Lambda no puede ser un valor negativo');
     return false;
   }
   return true;
@@ -447,6 +442,7 @@ function limpiarParametros(): void {
   cboMetodoGeneracion.value = '0';
 }
 
+// Función que borra los gráficos existentes.
 function limpiarGraficos(): void {
   if (graficoDistUniforme != null) graficoDistUniforme.destroy();
   if (graficoDistNormal != null) graficoDistNormal.destroy();

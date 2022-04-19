@@ -42,7 +42,7 @@ export class GeneradorExponencial extends GeneradorDistribucion {
       this.tabla.push([
         Number(limInferior.toFixed(4)),
         Number(limSuperior.toFixed(4)),
-        Number( marcaClase.toFixed(4)),
+        Number(marcaClase.toFixed(4)),
         Number(probObservada.toFixed(4)),
         Number(frecObservada.toFixed(4)),
         Number(probEsperada.toFixed(4)),
