@@ -11,15 +11,18 @@ export class GeneradorNormal extends GeneradorDistribucion {
     this.tabla = [];
 
     switch (metodo) {
+      // El método de generación de números pseudoaleatorios U(0, 1) es por el generador de JavaScript.
       case '1':
         this.generador = new GeneradorLenguaje();
         break;
+      // El método de generación de números pseudoaleatorios U(0, 1) es por el generador congruencial lineal.
       case '2':
         this.generador = new GeneradorLineal();
         break;
     }
 
     switch (metodoNormal) {
+      // Generamos las variables aleatorias normales por el método de Box-Muller.
       case 'box-muller':
         if (n % 2 === 0)
           this.generador.generarNumerosPseudoaleatorios(n);
@@ -35,6 +38,8 @@ export class GeneradorNormal extends GeneradorDistribucion {
             this.rnds.push(n2);
         }
         break;
+
+      // Generamos las variables aleatorias normales por el método de Convolución.   
       case 'convolucion':
         this.generador.generarNumerosPseudoaleatorios(12 * n);
         for (let i: number = 1; i <= n; i++) {
@@ -48,13 +53,15 @@ export class GeneradorNormal extends GeneradorDistribucion {
         break;
     }
 
+    // Ordenamos el vector de variables aleatorias generadas.
     Utils.quickSort(this.rnds);
 
     const min: number = Math.floor(this.rnds[0]);
     const max: number = Math.ceil(this.rnds[n - 1]);
     let limInferior: number = min;
     const anchoIntervalo: number = (max - min) / cantIntervalos;
-    
+
+    // Armamos la tabla de distribución.
     for (let i: number = 0; i < cantIntervalos; i++) {
       let limSuperior: number = limInferior + anchoIntervalo;
       let marcaClase: number = (limInferior + limSuperior) / 2;

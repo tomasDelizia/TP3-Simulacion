@@ -1,9 +1,17 @@
 import { GeneradorNumeros } from "./GeneradorNumeros";
 
+// Clase abstracta que genera variables aleatorias de una determinada distribución.
 export abstract class GeneradorDistribucion {
+  // El generador de números pseudoaleatorios con distribución uniforme (0, 1).
   protected generador: GeneradorNumeros;
+
+  // El vector con las variables aleatorias a generar.
   protected rnds: number[];
+
+  // Una matriz que lleva por columnas el límite inferior, el superior, la marca de clase, las probabilidades observada y esperada, y las frecuencias observada y esperada.
   protected tabla: number[][];
+
+  // La cantidad de variables aleatorias a generar.
   protected n: number;
 
   public async generarDistribucionUniforme(n: number, metodo: string, cantIntervalos: number, a: number, b: number): Promise<any> {

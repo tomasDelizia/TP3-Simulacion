@@ -11,27 +11,32 @@ export class GeneradorUniforme extends GeneradorDistribucion {
     this.tabla = [];
 
     switch (metodo) {
+      // El método de generación de números pseudoaleatorios U(0, 1) es por el generador de JavaScript.
       case '1':
         this.generador = new GeneradorLenguaje();
         break;
+      // El método de generación de números pseudoaleatorios U(0, 1) es por el generador congruencial lineal.
       case '2':
         this.generador = new GeneradorLineal();
         break;
     }
     this.generador.generarNumerosPseudoaleatorios(n);
 
+    // Generamos las variables aleatorias uniformes (A, B).
     for (let i: number = 0; i < n; i++) {
       let rnd: number = a + (this.generador.getRnds()[i] * (b - a));
       this.rnds.push(rnd);
     }
 
+    // Ordenamos el vector de variables aleatorias generadas.
     Utils.quickSort(this.rnds);
 
     let limInferior: number = a;
     const anchoIntervalo: number = (b - a) / cantIntervalos;
     const frecEsperada: number = n / cantIntervalos;
     const probEsperada: number = 1 / cantIntervalos;
-
+  
+    // Armamos la tabla de distribución.
     for (let i: number = 0; i < cantIntervalos; i++) {
       let limSuperior: number = limInferior + anchoIntervalo;
       let marcaClase: number = (limInferior + limSuperior) / 2;

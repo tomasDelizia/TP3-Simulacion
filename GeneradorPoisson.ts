@@ -2,19 +2,21 @@ import { GeneradorDistribucion } from './GeneradorDistribucion';
 import { Utils } from "./Utils";
 
 export class GeneradorPoisson extends GeneradorDistribucion {
-  public async generarDistribucionPoisson(
-    n: number,
-    lambda: number
-  ): Promise<any> {
+  public async generarDistribucionPoisson(n: number, lambda: number): Promise<any> {
     this.n = n;
     this.rnds = [];
     this.tabla = [];
 
+    // Generamos las variables aleatorias con distribución Poisson.
     for (let i: number = 0; i < n; i++) {
+      // Producto de números uniformes (0, 1).
       let p: number = 1;
+      // Iniciamos la variable Poisson en -1.
       let rnd: number = -1;
+      // Constante de corte.
       let a: number = Math.exp(-lambda);
       do {
+        // Obtenemos un RND uniforme (0, 1).
         let u: number = Math.random();
         p = p * u;
         rnd = rnd + 1;
@@ -22,11 +24,13 @@ export class GeneradorPoisson extends GeneradorDistribucion {
       this.rnds.push(rnd);
     }
 
+    // Ordenamos el vector de variables aleatorias generadas.
     Utils.quickSort(this.rnds);
-    console.log(this.rnds);
 
     const min: number = this.rnds[0];
     const max: number = this.rnds[n - 1];
+
+    // Armamos la tabla de distribución.
     for (let i: number = min; i <= max; i++) {
       let valor: number = i;
       let frecObservada = Utils.contarSi(this.rnds, valor);
