@@ -83,7 +83,7 @@ export class PruebaChiCuadrado extends PruebaBondad {
       case 'GeneradorNormal':
         this.m = 2;
         break;
-      case 'GeneradorExponencial' || 'GeneradorPoisson':
+      case 'GeneradorExponencial': case 'GeneradorPoisson':
         this.m = 1;  
         break;  
     }
