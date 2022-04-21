@@ -1,5 +1,5 @@
 import { Chart } from "chart.js";
-import { GeneradorDistribucion } from "./GeneradorDistribucion";
+import { GeneradorVA } from "./GeneradorVA";
 
 export module HTMLUtils {
 
@@ -11,6 +11,18 @@ export module HTMLUtils {
   // Función para mostrar un elemento div.
   export function mostrarSeccion(div: HTMLDivElement): void {
     div.style.display = 'block';
+  }
+
+  // Función para alertar un éxito.
+  export function alertarExito(div: HTMLDivElement): void {
+    div.classList.replace('alert-light', 'alert-success');
+    div.classList.replace('alert-danger', 'alert-success');
+  }
+
+  // Función para alertar un fracaso.
+  export function alertarFracaso(div: HTMLDivElement): void {
+    div.classList.replace('alert-light', 'alert-danger');
+    div.classList.replace('alert-success', 'alert-danger');
   }
 
   // Función que elimina todas las filas de la tabla HTML excepto los encabezados.

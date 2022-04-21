@@ -1,10 +1,10 @@
-import { GeneradorDistribucion } from "./GeneradorDistribucion";
+import { GeneradorVA } from "./GeneradorVA";
 import { GeneradorLenguaje } from "./GeneradorLenguaje";
 import { GeneradorLineal } from "./GeneradorLineal";
 import { Utils } from "./Utils";
 
 // Clase que genera variables aleatorias con distribución normal.
-export class GeneradorNormal extends GeneradorDistribucion {
+export class GeneradorNormal extends GeneradorVA {
 
   public async generarDistribucionNormal(n: number, metodo: string, cantIntervalos: number, media: number, desviacion: number, metodoNormal: string): Promise<any> {
     this.n = n;

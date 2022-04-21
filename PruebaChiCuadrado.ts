@@ -1,4 +1,4 @@
-import { GeneradorDistribucion } from "./GeneradorDistribucion";
+import { GeneradorVA } from "./GeneradorVA";
 import { PruebaBondad } from "./PruebaBondad";
 
 // Clase para realizar la prueba Chi-Cuadrado.
@@ -16,7 +16,7 @@ export class PruebaChiCuadrado extends PruebaBondad {
   // El valor de parámetros calculados para la prueba.
   private m: number;
 
-  public async probar(generador: GeneradorDistribucion): Promise<any> {
+  public async probar(generador: GeneradorVA): Promise<any> {
     this.tablaPrueba = [];
     let tablaDistribucion: number[][] = generador.getTabla();
 
@@ -86,17 +86,21 @@ export class PruebaChiCuadrado extends PruebaBondad {
     this.estadisticoTabulado = this.tablaChiCuadrado[this.v-1];
   }
 
-  public validarHipotesis(): string {
+  public validarHipotesis(): boolean {
     // Si los grados de libertad no están tabulados, no se puede hacer la prueba.
     if (this.v <= 0 || this.v > 30) {
-      return 'No se puede realizar la prueba Chi-Cuadrado.';
+      this.resultado = 'No se puede realizar la prueba Chi-Cuadrado.';
+      return false;
     }
     // Si el estadistico calculado es mayor al tabulado, se rechaza la hipótesis nula.
-    if (this.estadisticoPrueba > this.estadisticoTabulado)
-    return 'Ya que el estadístico calculado es mayor al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' > ' + this.estadisticoTabulado + '), se procede a rechazar la hipótesis nula.';
-
+    if (this.estadisticoPrueba > this.estadisticoTabulado) {
+      this.resultado = 'Ya que el estadístico calculado es mayor al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' > ' + this.estadisticoTabulado + '), se procede a rechazar la hipótesis nula.';
+      return false;
+    }
     // De lo contrario, no se puede rechazar la hipótesis nula.
-    else
-      return 'Ya que el estadístico calculado es menor o igual al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' <= ' + this.estadisticoTabulado + '), no se puede rechazar la hipótesis nula.';
+    else {
+      this.resultado = 'Ya que el estadístico calculado es menor o igual al estadístico tabulado (' + this.estadisticoPrueba.toFixed(4) + ' <= ' + this.estadisticoTabulado + '), no se puede rechazar la hipótesis nula.';
+      return true;
+    }
   }
 }

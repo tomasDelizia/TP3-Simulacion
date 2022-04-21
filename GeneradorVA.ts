@@ -1,7 +1,7 @@
 import { GeneradorNumeros } from "./GeneradorNumeros";
 
 // Clase abstracta que genera variables aleatorias de una determinada distribución.
-export abstract class GeneradorDistribucion {
+export abstract class GeneradorVA {
   // El generador de números pseudoaleatorios con distribución uniforme (0, 1).
   protected generador: GeneradorNumeros;
 

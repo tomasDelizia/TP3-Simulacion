@@ -1,7 +1,7 @@
 // Imports.
 import { Chart } from 'chart.js';
 import { GeneradorCSV } from './GeneradorCSV';
-import { GeneradorDistribucion } from './GeneradorDistribucion';
+import { GeneradorVA } from './GeneradorVA';
 import { GeneradorExponencial } from './GeneradorExponencial';
 import { GeneradorNormal } from './GeneradorNormal';
 import { GeneradorPoisson } from './GeneradorPoisson';
@@ -60,14 +60,14 @@ const tablaKSDistNormal: HTMLTableElement = document.getElementById('tablaKSDist
 const tablaKSDistExponencial: HTMLTableElement = document.getElementById('tablaKSDistExponencial') as HTMLTableElement;
 
 // Definición de los cuadros de texto con los resultados de las hipótesis.
-const txtResChiUniforme: HTMLTextAreaElement = document.getElementById('txtResChiUniforme') as HTMLTextAreaElement;
-const txtResChiNormal: HTMLTextAreaElement = document.getElementById('txtResChiNormal') as HTMLTextAreaElement;
-const txtResChiExponencial: HTMLTextAreaElement = document.getElementById('txtResChiExponencial') as HTMLTextAreaElement;
-const txtResChiPoisson: HTMLTextAreaElement = document.getElementById('txtResChiPoisson') as HTMLTextAreaElement;
+const alertResChiUniforme: HTMLDivElement = document.getElementById('alertResChiUniforme') as HTMLDivElement;
+const alertResChiNormal: HTMLDivElement = document.getElementById('alertResChiNormal') as HTMLDivElement;
+const alertResChiExponencial: HTMLDivElement = document.getElementById('alertResChiExponencial') as HTMLDivElement;
+const alertResChiPoisson: HTMLDivElement = document.getElementById('alertResChiPoisson') as HTMLDivElement;
 
-const txtResKSUniforme: HTMLTextAreaElement = document.getElementById('txtResKSUniforme') as HTMLTextAreaElement;
-const txtResKSNormal: HTMLTextAreaElement = document.getElementById('txtResKSNormal') as HTMLTextAreaElement;
-const txtResKSExponencial: HTMLTextAreaElement = document.getElementById('txtResKSExponencial') as HTMLTextAreaElement;
+const alertResKSUniforme: HTMLDivElement = document.getElementById('alertResKSUniforme') as HTMLDivElement;
+const alertResKSNormal: HTMLDivElement = document.getElementById('alertResKSNormal') as HTMLDivElement;
+const alertResKSExponencial: HTMLDivElement = document.getElementById('alertResKSExponencial') as HTMLDivElement;
 
 // Definición del generador de archivos CSV.
 const generadorCSV: GeneradorCSV = new GeneradorCSV();
@@ -84,7 +84,7 @@ let desviacion: number;
 let lambda: number;
 
 // Definición del generador de variables aleatorias genérico, la prueba Chi-Cuadrado y la prueba KS.
-let generadorDistribucion: GeneradorDistribucion;
+let generadorVA: GeneradorVA;
 const pruebaChiCuadrado: PruebaBondad = new PruebaChiCuadrado();
 const pruebaKS: PruebaBondad = new PruebaKS();
 
@@ -109,7 +109,7 @@ btnDescargarPoisson.addEventListener('click', generarArchivo);
 
 // Genera un archivo CSV que contiene los números aleatorios generados.
 function generarArchivo(): void {
-  generadorCSV.generarArchivo(generadorDistribucion.getRnds(), 'Serie');
+  generadorCSV.generarArchivo(generadorVA.getRnds(), 'Serie');
 }
 
 // Al principio se ocultan todas las secciones de las distintas distribuciones.
@@ -132,7 +132,7 @@ cboDistribucion.addEventListener('input', () => {
       break;
     // Se selecciona la distribución uniforme.
     case 'uniforme':
-      generadorDistribucion = new GeneradorUniforme();
+      generadorVA = new GeneradorUniforme();
       HTMLUtils.mostrarSeccion(divDistUniforme);
       HTMLUtils.ocultarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistExponencial);
@@ -143,7 +143,7 @@ cboDistribucion.addEventListener('input', () => {
       break;
     // Se selecciona la distribución normal.
     case 'normal':
-      generadorDistribucion = new GeneradorNormal();
+      generadorVA = new GeneradorNormal();
       HTMLUtils.mostrarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistUniforme);
       HTMLUtils.ocultarSeccion(divDistExponencial);
@@ -154,7 +154,7 @@ cboDistribucion.addEventListener('input', () => {
       break;
     // Se selecciona la distribución exponencial.
     case 'exponencial':
-      generadorDistribucion = new GeneradorExponencial();
+      generadorVA = new GeneradorExponencial();
       HTMLUtils.mostrarSeccion(divDistExponencial);
       HTMLUtils.ocultarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistUniforme);
@@ -165,7 +165,7 @@ cboDistribucion.addEventListener('input', () => {
       break;
     // Se selecciona la distribución Poisson.
     case 'poisson':
-      generadorDistribucion = new GeneradorPoisson();
+      generadorVA = new GeneradorPoisson();
       HTMLUtils.mostrarSeccion(divDistPoisson);
       HTMLUtils.ocultarSeccion(divDistNormal);
       HTMLUtils.ocultarSeccion(divDistExponencial);
@@ -185,30 +185,38 @@ btnDistUniforme.addEventListener('click', async () => {
     HTMLUtils.limpiarTabla(tablaChiDistUniforme);
     HTMLUtils.limpiarTabla(tablaKSDistUniforme);
     limpiarGraficos();
-    txtResChiUniforme.value = '';
-    txtResKSUniforme.value = '';
+    alertResChiUniforme.innerHTML = 'Resultado: ';
+    alertResKSUniforme.innerHTML = 'Resultado: ';
 
     // Generamos las variables aleatorias con distribución uniforme (A, B).
-    await generadorDistribucion.generarDistribucionUniforme(n, metodo, cantIntervalos, a, b);
-    for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistUniforme);
+    await generadorVA.generarDistribucionUniforme(n, metodo, cantIntervalos, a, b);
+    for (let i: number = 0; i < generadorVA.getTabla().length; i++) {
+      HTMLUtils.agregarFilaATabla(generadorVA.getTabla()[i], tablaDistUniforme);
     }
     btnDescargarUniforme.disabled = false;
-    graficoDistUniforme = HTMLUtils.generarGrafico(histogramaDistUniforme, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
+    graficoDistUniforme = HTMLUtils.generarGrafico(histogramaDistUniforme, generadorVA.getIntervalos(), generadorVA.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
-    await pruebaChiCuadrado.probar(generadorDistribucion);
+    await pruebaChiCuadrado.probar(generadorVA);
     for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistUniforme);
     }
-    txtResChiUniforme.value = pruebaChiCuadrado.validarHipotesis();
+    if (pruebaChiCuadrado.validarHipotesis())
+      HTMLUtils.alertarExito(alertResChiUniforme);
+    else
+      HTMLUtils.alertarFracaso(alertResChiUniforme);
+    alertResChiUniforme.innerHTML += pruebaChiCuadrado.getResultado();
 
     // Realizamos la prueba KS.
-    await pruebaKS.probar(generadorDistribucion);
+    await pruebaKS.probar(generadorVA);
     for (let i: number = 0; i < pruebaKS.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(pruebaKS.getTabla()[i], tablaKSDistUniforme);
     }
-    txtResKSUniforme.value = pruebaKS.validarHipotesis();
+    if (pruebaKS.validarHipotesis())
+      HTMLUtils.alertarExito(alertResKSUniforme);
+    else
+      HTMLUtils.alertarFracaso(alertResKSUniforme);
+    alertResKSUniforme.innerHTML += pruebaKS.getResultado();
   }
 });
 
@@ -220,30 +228,38 @@ btnDistNormal.addEventListener('click', async () => {
     HTMLUtils.limpiarTabla(tablaChiDistNormal);
     HTMLUtils.limpiarTabla(tablaKSDistNormal);
     limpiarGraficos()
-    txtResChiNormal.value = '';
-    txtResKSNormal.value = '';
+    alertResChiNormal.innerHTML = 'Resultado: ';
+    alertResKSNormal.innerHTML = 'Resultado: ';
 
     // Generamos las variables aleatorias con distribución normal.
-    await generadorDistribucion.generarDistribucionNormal(n, metodo, cantIntervalos, media, desviacion, metodoNormal);
-    for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistNormal);
+    await generadorVA.generarDistribucionNormal(n, metodo, cantIntervalos, media, desviacion, metodoNormal);
+    for (let i: number = 0; i < generadorVA.getTabla().length; i++) {
+      HTMLUtils.agregarFilaATabla(generadorVA.getTabla()[i], tablaDistNormal);
     }
     btnDescargarNormal.disabled = false;
-    graficoDistNormal = HTMLUtils.generarGrafico(histogramaDistNormal, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
+    graficoDistNormal = HTMLUtils.generarGrafico(histogramaDistNormal, generadorVA.getIntervalos(), generadorVA.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
-    await pruebaChiCuadrado.probar(generadorDistribucion);
+    await pruebaChiCuadrado.probar(generadorVA);
     for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistNormal);
     }
-    txtResChiNormal.value = pruebaChiCuadrado.validarHipotesis();
+    if (pruebaChiCuadrado.validarHipotesis())
+      HTMLUtils.alertarExito(alertResChiNormal);
+    else
+      HTMLUtils.alertarFracaso(alertResChiNormal);
+    alertResChiNormal.innerHTML += pruebaChiCuadrado.getResultado();
 
     // Realizamos la prueba KS.
-    await pruebaKS.probar(generadorDistribucion);
+    await pruebaKS.probar(generadorVA);
     for (let i: number = 0; i < pruebaKS.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(pruebaKS.getTabla()[i], tablaKSDistNormal);
     }
-    txtResKSNormal.value = pruebaKS.validarHipotesis();
+    if (pruebaKS.validarHipotesis())
+      HTMLUtils.alertarExito(alertResKSNormal);
+    else
+      HTMLUtils.alertarFracaso(alertResKSNormal);
+    alertResKSNormal.innerHTML += pruebaKS.getResultado();
   }
 });
 
@@ -255,30 +271,38 @@ btnDistExponencial.addEventListener('click', async () => {
     HTMLUtils.limpiarTabla(tablaChiDistExponencial);
     HTMLUtils.limpiarTabla(tablaKSDistExponencial);
     limpiarGraficos()
-    txtResChiExponencial.value = '';
-    txtResKSExponencial.value = '';
+    alertResChiExponencial.innerHTML = 'Resultado: ';
+    alertResKSExponencial.innerHTML = 'Resultado: ';
 
     // Generamos las variables aleatorias con distribución exponencial negativa.
-    await generadorDistribucion.generarDistribucionExponencial(n, metodo, cantIntervalos, lambda);
-    for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      HTMLUtils.agregarFilaATabla(generadorDistribucion.getTabla()[i], tablaDistExponencial);
+    await generadorVA.generarDistribucionExponencial(n, metodo, cantIntervalos, lambda);
+    for (let i: number = 0; i < generadorVA.getTabla().length; i++) {
+      HTMLUtils.agregarFilaATabla(generadorVA.getTabla()[i], tablaDistExponencial);
     }
     btnDescargarExponencial.disabled = false;
-    graficoDistExponencial = HTMLUtils.generarGrafico(histogramaDistExponencial, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
+    graficoDistExponencial = HTMLUtils.generarGrafico(histogramaDistExponencial, generadorVA.getIntervalos(), generadorVA.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
-    await pruebaChiCuadrado.probar(generadorDistribucion);
+    await pruebaChiCuadrado.probar(generadorVA);
     for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistExponencial);
     }
-    txtResChiExponencial.value = pruebaChiCuadrado.validarHipotesis();
+    if (pruebaChiCuadrado.validarHipotesis())
+      HTMLUtils.alertarExito(alertResChiExponencial);
+    else
+      HTMLUtils.alertarFracaso(alertResChiExponencial);
+    alertResChiExponencial.innerHTML += pruebaChiCuadrado.getResultado();
 
     // Realizamos la prueba KS.
-    await pruebaKS.probar(generadorDistribucion);
+    await pruebaKS.probar(generadorVA);
     for (let i: number = 0; i < pruebaKS.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(pruebaKS.getTabla()[i], tablaKSDistExponencial);
     }
-    txtResKSExponencial.value = pruebaKS.validarHipotesis();
+    if (pruebaKS.validarHipotesis())
+      HTMLUtils.alertarExito(alertResKSExponencial);
+    else
+      HTMLUtils.alertarFracaso(alertResKSExponencial);
+    alertResKSExponencial.innerHTML += pruebaKS.getResultado();
   }
 });
 
@@ -289,12 +313,12 @@ btnDistPoisson.addEventListener('click', async () => {
     HTMLUtils.limpiarTabla(tablaDistPoisson);
     HTMLUtils.limpiarTabla(tablaChiDistPoisson);
     limpiarGraficos()
-    txtResChiPoisson.value = '';
+    alertResChiPoisson.innerHTML = 'Resultado: ';
 
     // Generamos las variables aleatorias con distribución Poisson.
-    await generadorDistribucion.generarDistribucionPoisson(n, lambda);
-    for (let i: number = 0; i < generadorDistribucion.getTabla().length; i++) {
-      let fila: number[] = generadorDistribucion.getTabla()[i];
+    await generadorVA.generarDistribucionPoisson(n, lambda);
+    for (let i: number = 0; i < generadorVA.getTabla().length; i++) {
+      let fila: number[] = generadorVA.getTabla()[i];
       let filaNueva: number[] = [];
       // Salteamos las columnas 1 y 2 de la tabla de distribución, ya que tiene la columna "Valor" repetida.
       for (let j: number = 0; j < fila.length; j++) {
@@ -304,14 +328,18 @@ btnDistPoisson.addEventListener('click', async () => {
       // let filaNueva: number[] = [fila[0],fila[3],fila[4],fila[5],fila[6]];
     }
     btnDescargarPoisson.disabled = false;
-    graficoDistPoisson = HTMLUtils.generarGrafico(histogramaDistPoisson, generadorDistribucion.getIntervalos(), generadorDistribucion.getFrecuenciasObservadas());
+    graficoDistPoisson = HTMLUtils.generarGrafico(histogramaDistPoisson, generadorVA.getIntervalos(), generadorVA.getFrecuenciasObservadas());
 
     // Realizamos la prueba Chi-Cuadrado.
-    await pruebaChiCuadrado.probar(generadorDistribucion);
+    await pruebaChiCuadrado.probar(generadorVA);
     for (let i: number = 0; i < pruebaChiCuadrado.getTabla().length; i++) {
       HTMLUtils.agregarFilaATabla(pruebaChiCuadrado.getTabla()[i], tablaChiDistPoisson);
     }
-    txtResChiPoisson.value = pruebaChiCuadrado.validarHipotesis();
+    if (pruebaChiCuadrado.validarHipotesis())
+      HTMLUtils.alertarExito(alertResChiPoisson);
+    else
+      HTMLUtils.alertarFracaso(alertResChiPoisson);
+      alertResChiPoisson.innerHTML += pruebaChiCuadrado.getResultado();
   }
 });
 

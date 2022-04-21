@@ -1,4 +1,4 @@
-import { GeneradorDistribucion } from "./GeneradorDistribucion";
+import { GeneradorVA } from "./GeneradorVA";
 import { PruebaBondad } from "./PruebaBondad";
 
 // Clase para realizar la prueba Kolmogorov-Smirnov.
@@ -11,12 +11,12 @@ export class PruebaKS extends PruebaBondad {
     0.238, 0.234, 0.231, 0.227, 0.224, 0.221, 0.218, 0.215, 0.213, 0.21
   ];
 
-  public async probar(generador: GeneradorDistribucion): Promise<any> {
+  public async probar(generador: GeneradorVA): Promise<any> {
     this.tablaPrueba = [];
     // Obtenemos el valor del estadístico tabulado y los grados de libertad.
     let n: number = generador.getN();
     if (n > 40) {
-      this.estadisticoTabulado = 1.36 / Math.sqrt(n);
+      this.estadisticoTabulado = Number((1.36 / Math.sqrt(n)).toFixed(4));
     }
     else {
       this.v = n;
