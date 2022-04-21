@@ -76,11 +76,16 @@ export class PruebaChiCuadrado extends PruebaBondad {
 
     // Obtenemos el valor del estadístico tabulado y los grados de libertad.
     this.k = this.tablaPrueba.length;
-    this.m = -1;
-    if (generador.constructor.name === 'GeneradorPoisson')
-      this.m = 2;
-    else {
-      this.m = 1;
+    switch (generador.constructor.name) {
+      case 'GeneradorUniforme':
+        this.m = 0;
+        break;
+      case 'GeneradorNormal':
+        this.m = 2;
+        break;
+      case 'GeneradorExponencial' || 'GeneradorPoisson':
+        this.m = 1;  
+        break;  
     }
     this.v = this.k - this.m - 1;
     this.estadisticoTabulado = this.tablaChiCuadrado[this.v-1];
