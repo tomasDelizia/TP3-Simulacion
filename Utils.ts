@@ -73,18 +73,17 @@ export module Utils {
   
   // Función que cuenta los elementos de un vector en un que sean iguales a un valor dado.
   export function contarSi(vec: number[], valor: number): number {
-    let contador: number = contarEnRango(vec, valor, valor + 1);
+    let contador: number = contarEnRango(vec, valor, valor + 0.01);
     return contador;
   }
   
   // Función que calcula el factorial de un número pasado por parámetro.
   export function factorial(x: number): number {
     if (x < 0) 
-          return -1;
+      return -1;
     else if (x === 0) 
-        return 1;
-    else {
-        return (x * factorial(x - 1));
-    }
+      return 1;
+    else
+      return (x * factorial(x - 1));
   }  
 }
